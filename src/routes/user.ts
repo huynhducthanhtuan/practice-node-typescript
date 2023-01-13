@@ -1,8 +1,8 @@
 import express from "express";
 import routerFunc = express.Router;
 const router = routerFunc();
-import UserController from "../controllers/User";
-// import { isAuth } from "../middlewares/authentication";
+import { UserController } from "../controllers/User";
+import { isAuth } from "../middlewares/authentication";
 
 /**
  * @swagger

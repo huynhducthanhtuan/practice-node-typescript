@@ -1,22 +1,28 @@
-const _ = require("lodash");
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 const randomConfirmationCode = () => {
 	const code = Math.floor(100000 + Math.random() * 900000);
 	return code.toString();
 };
 
-const cryptPassword = (password, callback) => {
-	bcrypt.genSalt(10, (error, salt) => {
+const cryptPassword = (
+	password: string,
+	callback: (error: any, hashPassword?: string) => {}
+) => {
+	bcrypt.genSalt(10, (error: any, salt) => {
 		if (error) return callback(error);
 
-		bcrypt.hash(password, salt, (error, hashPassword) => {
+		bcrypt.hash(password, salt, (error: any, hashPassword: string) => {
 			return callback(error, hashPassword);
 		});
 	});
 };
 
-const comparePassword = (plainPassword, hashPassword, callback) => {
+const comparePassword = (
+	plainPassword: string,
+	hashPassword: string,
+	callback: (error: any, isPasswordMatch?: boolean) => {}
+) => {
 	bcrypt.compare(plainPassword, hashPassword, (error, isPasswordMatch) => {
 		return error == null
 			? callback(null, isPasswordMatch)
@@ -24,7 +30,7 @@ const comparePassword = (plainPassword, hashPassword, callback) => {
 	});
 };
 
-function convertUnixTimestampToNumber(unixTimestamp) {
+const convertUnixTimestampToNumber = (unixTimestamp: number) => {
 	const date = new Date(unixTimestamp * 1000);
 
 	const year =
@@ -52,9 +58,9 @@ function convertUnixTimestampToNumber(unixTimestamp) {
 	const formattedTimeNumber = Number(formattedTimeStr);
 
 	return formattedTimeNumber;
-}
+};
 
-module.exports = {
+export {
 	randomConfirmationCode,
 	cryptPassword,
 	comparePassword,

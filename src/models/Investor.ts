@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
-const AutoIncrement = require("mongoose-sequence")(mongoose);
+import { Schema, model } from "mongoose";
+import mongooseSequence from "mongoose-sequence";
+const AutoIncrement = mongooseSequence(mongoose);
 
-const InvestorSchema = new mongoose.Schema(
+const InvestorSchema = new Schema(
 	{
 		isShark: {
 			type: Boolean,
@@ -54,4 +55,6 @@ const InvestorSchema = new mongoose.Schema(
 
 InvestorSchema.plugin(AutoIncrement, { inc_field: "sharkId" });
 
-module.exports = mongoose.model("Investor", InvestorSchema);
+const InvestorModel = model("Investor", InvestorSchema);
+
+export default InvestorModel;

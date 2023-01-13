@@ -5,7 +5,7 @@ import CoinModel from "./Coin";
 import TagModel from "./Tag";
 import TransactionModel from "./Transaction";
 
-export default {
+export {
 	UserModel,
 	AdminModel,
 	InvestorModel,

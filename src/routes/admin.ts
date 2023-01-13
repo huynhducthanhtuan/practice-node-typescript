@@ -1,8 +1,7 @@
 import express from "express";
 import routerFunc = express.Router;
 const router = routerFunc();
-
-import AdminController from "../controllers/Admin";
+import { AdminController } from "../controllers/Admin";
 import { isAdmin } from "../middlewares/authentication";
 
 /**

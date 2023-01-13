@@ -1,15 +1,14 @@
-const {
+import { Request } from "express";
+import {
 	validateUsername,
 	validatePassword,
 	returnValidationResult
-} = require("./index.js");
+} from "./index";
 
-const validateSignInBody = async (req, res, next) => {
+const validateSignInBody = async (req: Request) => {
 	await validateUsername(req);
 	await validatePassword(req);
 	return returnValidationResult(req);
 };
 
-module.exports = {
-	validateSignInBody
-};
+export { validateSignInBody };

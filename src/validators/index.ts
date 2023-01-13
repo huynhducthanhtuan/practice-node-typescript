@@ -1,6 +1,7 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult } from "express-validator";
+import { Request } from "express";
 
-const validateUsername = async (req) => {
+const validateUsername = async (req: Request) => {
 	await body("username")
 		.trim()
 		.notEmpty()
@@ -12,7 +13,7 @@ const validateUsername = async (req) => {
 		.run(req);
 };
 
-const validateEmail = async (req) => {
+const validateEmail = async (req: Request) => {
 	await body("email")
 		.trim()
 		.notEmpty()
@@ -24,7 +25,7 @@ const validateEmail = async (req) => {
 		.run(req);
 };
 
-const validateEmailOptional = async (req) => {
+const validateEmailOptional = async (req: Request) => {
 	await body("email")
 		.optional({ checkFalsy: true, nullable: true })
 		.trim()
@@ -35,7 +36,7 @@ const validateEmailOptional = async (req) => {
 		.run(req);
 };
 
-const validatePhoneNumber = async (req) => {
+const validatePhoneNumber = async (req: Request) => {
 	await body("phoneNumber")
 		.trim()
 		.notEmpty()
@@ -45,7 +46,7 @@ const validatePhoneNumber = async (req) => {
 		.run(req);
 };
 
-const validatePhoneNumberOptional = async (req) => {
+const validatePhoneNumberOptional = async (req: Request) => {
 	await body("phoneNumber")
 		.optional({ checkFalsy: true, nullable: true })
 		.trim()
@@ -54,7 +55,7 @@ const validatePhoneNumberOptional = async (req) => {
 		.run(req);
 };
 
-const validatePassword = async (req) => {
+const validatePassword = async (req: Request) => {
 	await body("password")
 		.trim()
 		.notEmpty()
@@ -64,7 +65,7 @@ const validatePassword = async (req) => {
 		.run(req);
 };
 
-const validateConfirmPassword = async (req) => {
+const validateConfirmPassword = async (req: Request) => {
 	await body("confirmPassword")
 		.trim()
 		.notEmpty()
@@ -81,7 +82,7 @@ const validateConfirmPassword = async (req) => {
 		.run(req);
 };
 
-const validateCode = async (req) => {
+const validateCode = async (req: Request) => {
 	await body("code")
 		.trim()
 		.notEmpty()
@@ -91,7 +92,7 @@ const validateCode = async (req) => {
 		.run(req);
 };
 
-const validateOldPassword = async (req) => {
+const validateOldPassword = async (req: Request) => {
 	await body("oldPassword")
 		.trim()
 		.notEmpty()
@@ -101,7 +102,7 @@ const validateOldPassword = async (req) => {
 		.run(req);
 };
 
-const validateNewPassword = async (req) => {
+const validateNewPassword = async (req: Request) => {
 	await body("newPassword")
 		.trim()
 		.notEmpty()
@@ -111,7 +112,7 @@ const validateNewPassword = async (req) => {
 		.run(req);
 };
 
-const validateNewConfirmPassword = async (req) => {
+const validateNewConfirmPassword = async (req: Request) => {
 	await body("newConfirmPassword")
 		.trim()
 		.notEmpty()
@@ -128,7 +129,7 @@ const validateNewConfirmPassword = async (req) => {
 		.run(req);
 };
 
-const validateFullNameOptional = async (req) => {
+const validateFullNameOptional = async (req: Request) => {
 	await body("fullName")
 		.optional({ checkFalsy: true, nullable: true })
 		.trim()
@@ -141,7 +142,7 @@ const validateFullNameOptional = async (req) => {
 		.run(req);
 };
 
-const validateWebsiteOptional = async (req) => {
+const validateWebsiteOptional = async (req: Request) => {
 	await body("website")
 		.optional({ checkFalsy: true, nullable: true })
 		.trim()
@@ -152,7 +153,7 @@ const validateWebsiteOptional = async (req) => {
 		.run(req);
 };
 
-const validateAvatarOptional = async (req) => {
+const validateAvatarOptional = async (req: Request) => {
 	await body("avatar")
 		.optional({ checkFalsy: true, nullable: true })
 		.trim()
@@ -163,7 +164,10 @@ const validateAvatarOptional = async (req) => {
 		.run(req);
 };
 
-const returnValidationResult = (req) => {
+const returnValidationResult: (req: Request) => {
+	status: string;
+	error: any;
+} = (req: Request) => {
 	const errors = validationResult(req);
 	return {
 		status: errors.isEmpty() ? "successfully" : "failed",
@@ -171,7 +175,7 @@ const returnValidationResult = (req) => {
 	};
 };
 
-module.exports = {
+export {
 	validateUsername,
 	validateEmail,
 	validateEmailOptional,

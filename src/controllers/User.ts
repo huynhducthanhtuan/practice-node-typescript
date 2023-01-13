@@ -1,7 +1,5 @@
-const _ = require("lodash");
-const { cryptPassword, comparePassword } = require("../helpers");
-
-const {
+import _, { lte } from "lodash";
+import {
 	getUserByEmail,
 	updateUserPassword,
 	getPasswordByEmail,
@@ -10,20 +8,20 @@ const {
 	getListOfSharkFollowed,
 	addNewShark,
 	deleteSharkNotFound
-} = require("../services/crud-database/user");
-const {
+} from "../services/crud-database/user";
+import {
 	getUserProfile,
 	updateUserProfile,
 	upgradeUserPremiumAccount
-} = require("../services/crud-database/admin");
-const {
+} from "../services/crud-database/admin";
+import {
 	validateUpdateProfileBody,
 	validateChangePasswordBody
-} = require("../validators/user");
-const { lte } = require("lodash");
+} from "../validators/user";
+import { cryptPassword, comparePassword } from "../helpers";
 
-function UserController() {
-	this.getUserProfile = async (req, res, next) => {
+const UserController = {
+	getUserProfile: async (req: Request, res: Response, next: Next) => {
 		let userId = req.query.userId;
 
 		if (!userId) userId = null;
@@ -54,9 +52,9 @@ function UserController() {
 					data: {}
 				})
 			);
-	};
+	},
 
-	this.updateUserProfile = async (req, res, next) => {
+	updateUserProfile: async (req: Request, res: Response, next: Next) => {
 		let userId = req.query.userId;
 
 		if (!userId) userId = null;
@@ -95,9 +93,9 @@ function UserController() {
 					})
 				);
 		}
-	};
+	},
 
-	this.changePassword = async (req, res, next) => {
+	changePassword: async (req: Request, res: Response, next: Next) => {
 		const { status, error } = await validateChangePasswordBody(
 			req,
 			res,
@@ -148,9 +146,9 @@ function UserController() {
 					.json({ message: "user-notfound", error: "user-notfound" });
 			}
 		}
-	};
+	},
 
-	this.upgradePremiumAccount = async (req, res, next) => {
+	upgradePremiumAccount: async (req: Request, res: Response, next: Next) => {
 		let userId = req.body.userId;
 
 		if (!userId) userId = null;
@@ -177,9 +175,9 @@ function UserController() {
 					error: error
 				})
 			);
-	};
+	},
 
-	this.followSharkWallet = async (req, res, next) => {
+	followSharkWallet: async (req: Request, res: Response, next: Next) => {
 		let { userId, sharkId } = req.body;
 
 		if (!userId) userId = null;
@@ -214,9 +212,9 @@ function UserController() {
 					error: error
 				})
 			);
-	};
+	},
 
-	this.unfollowSharkWallet = async (req, res, next) => {
+	unfollowSharkWallet: async (req: Request, res: Response, next: Next) => {
 		let { userId, sharkId } = req.body;
 
 		if (!userId) userId = null;
@@ -250,9 +248,9 @@ function UserController() {
 					error: error
 				})
 			);
-	};
+	},
 
-	this.getSharkFollowed = async (req, res, next) => {
+	getSharkFollowed: async (req: Request, res: Response, next: Next) => {
 		let userId = req.query.userId;
 
 		if (!userId) userId = null;
@@ -285,9 +283,9 @@ function UserController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.addNewShark = async (req, res, next) => {
+	addNewShark: async (req: Request, res: Response, next: Next) => {
 		let { walletAddress, userId } = req.body;
 
 		if (!userId) userId = null;
@@ -316,10 +314,9 @@ function UserController() {
 					error: error.error
 				})
 			);
-	};
+	},
 
-	this.deleteSharkNotFound = async (req, res, next) => {
-
+	deleteSharkNotFound: async (req: Request, res: Response, next: Next) => {
 		let { walletAddress, userId } = req.body;
 
 		if (!userId) userId = null;
@@ -346,7 +343,7 @@ function UserController() {
 					error: error.error
 				})
 			);
-	};
-}
+	}
+};
 
-module.exports = new UserController();
+export { UserController };

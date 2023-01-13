@@ -1,7 +1,7 @@
 import express from "express";
 import routerFunc = express.Router;
 const router = routerFunc();
-import DisplayController from "../controllers/Display";
+import { DisplayController } from "../controllers/Display";
 
 /**
  * @swagger

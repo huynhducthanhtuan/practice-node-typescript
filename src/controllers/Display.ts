@@ -1,5 +1,5 @@
-const _ = require("lodash");
-const {
+import _ from "lodash";
+import {
 	getListOfCoinsAndTokens,
 	getListOfSharks,
 	getListOfTags,
@@ -17,10 +17,10 @@ const {
 	getLengthOfSharksList,
 	getLengthOfUsersList,
 	getLengthOfTransactionsList
-} = require("../services/crud-database/user");
+} from "../services/crud-database/user";
 
-function DisplayController() {
-	this.getCoinsAndTokens = async (req, res, next) => {
+const DisplayController = {
+	getCoinsAndTokens: async (req: Request, res: Response, next: Next) => {
 		await getListOfCoinsAndTokens()
 			.then((datas) =>
 				datas.length === 0
@@ -45,9 +45,13 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getReducingCoinsAndTokens = async (req, res, next) => {
+	getReducingCoinsAndTokens: async (
+		req: Request,
+		res: Response,
+		next: Next
+	) => {
 		await getListReducingCoinsAndTokens()
 			.then((datas) =>
 				datas.length === 0
@@ -72,9 +76,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getTrendingCoins = async (req, res, next) => {
+	getTrendingCoins: async (req: Request, res: Response, next: Next) => {
 		await getListTrendingCoins()
 			.then((datas) =>
 				datas.length === 0
@@ -99,9 +103,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getTrendingTokens = async (req, res, next) => {
+	getTrendingTokens: async (req: Request, res: Response, next: Next) => {
 		await getListTrendingTokens()
 			.then((datas) =>
 				datas.length === 0
@@ -126,9 +130,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getCoinOrTokenDetails = async (req, res, next) => {
+	getCoinOrTokenDetails: async (req: Request, res: Response, next: Next) => {
 		if (!req.query.symbol) symbol = null;
 		else {
 			const symbolCheck = _.toString(req.query.symbol).toLowerCase();
@@ -157,9 +161,9 @@ function DisplayController() {
 					data: {}
 				})
 			);
-	};
+	},
 
-	this.getSharks = async (req, res, next) => {
+	getSharks: async (req: Request, res: Response, next: Next) => {
 		const { userId } = req.query;
 		await getListOfSharks(userId)
 			.then((datas) =>
@@ -185,9 +189,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getCryptosOfShark = async (req, res, next) => {
+	getCryptosOfShark: async (req: Request, res: Response, next: Next) => {
 		let sharkId = req.query.sharkId;
 
 		if (!sharkId) sharkId = null;
@@ -221,9 +225,9 @@ function DisplayController() {
 					datasLength: 0
 				})
 			);
-	};
+	},
 
-	this.getTransactionsOfShark = async (req, res, next) => {
+	getTransactionsOfShark: async (req: Request, res: Response, next: Next) => {
 		let sharkId = req.query.id;
 
 		if (!sharkId) sharkId = null;
@@ -257,9 +261,13 @@ function DisplayController() {
 					datasLength: 0
 				})
 			);
-	};
+	},
 
-	this.getTransactionsLengthForPage = async (req, res, next) => {
+	getTransactionsLengthForPage: async (
+		req: Request,
+		res: Response,
+		next: Next
+	) => {
 		let { valueFilter } = req.body;
 
 		valueFilter = _.toNumber(valueFilter);
@@ -287,9 +295,13 @@ function DisplayController() {
 					data: 0
 				})
 			);
-	};
+	},
 
-	this.getListTransactionsOfAllSharks = async (req, res, next) => {
+	getListTransactionsOfAllSharks: async (
+		req: Request,
+		res: Response,
+		next: Next
+	) => {
 		let { page, valueFilter } = req.body;
 
 		valueFilter = _.toNumber(valueFilter);
@@ -326,9 +338,13 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getTradeTransactionHistory = async (req, res, next) => {
+	getTradeTransactionHistory: async (
+		req: Request,
+		res: Response,
+		next: Next
+	) => {
 		let { sharkId, coinSymbol } = req.query;
 
 		if (!sharkId) sharkId = null;
@@ -361,9 +377,9 @@ function DisplayController() {
 					datasLength: 0
 				})
 			);
-	};
+	},
 
-	this.getGainLossOfSharks = async (req, res, next) => {
+	getGainLossOfSharks: async (req: Request, res: Response, next: Next) => {
 		let isLoss = false;
 		if (!req.query.isLoss) isLoss = false;
 		else isLoss = req.query.isLoss === "true";
@@ -392,9 +408,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getGainLossOfCoins = async (req, res, next) => {
+	getGainLossOfCoins: async (req: Request, res: Response, next: Next) => {
 		let isLoss = false;
 
 		if (!req.query.isLoss) isLoss = false;
@@ -424,9 +440,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getTags = async (req, res, next) => {
+	getTags: async (req: Request, res: Response, next: Next) => {
 		await getListOfTags()
 			.then((datas) =>
 				datas.length === 0
@@ -451,9 +467,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getLengthOfSharksList = async (req, res, next) => {
+	getLengthOfSharksList: async (req: Request, res: Response, next: Next) => {
 		await getLengthOfSharksList()
 			.then((data) =>
 				data.message !== "success"
@@ -476,9 +492,13 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getLengthOfTransactionsList = async (req, res, next) => {
+	getLengthOfTransactionsList: async (
+		req: Request,
+		res: Response,
+		next: Next
+	) => {
 		await getLengthOfTransactionsList()
 			.then((data) =>
 				data.message !== "success"
@@ -501,9 +521,9 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getLengthOfUsersList = async (req, res, next) => {
+	getLengthOfUsersList: async (req: Request, res: Response, next: Next) => {
 		await getLengthOfUsersList()
 			.then((data) =>
 				data.message !== "success"
@@ -526,7 +546,7 @@ function DisplayController() {
 					datas: []
 				})
 			);
-	};
-}
+	}
+};
 
-module.exports = new DisplayController();
+export { DisplayController };

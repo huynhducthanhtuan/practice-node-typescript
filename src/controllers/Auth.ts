@@ -1,26 +1,21 @@
-const dotenv = require("dotenv");
-dotenv.config();
-
-const {
-	validateSignUpBody,
-	validateSignInBody
-} = require("../validators/user");
-const {
+import {
 	createNewUser,
 	checkExistedUsername,
 	checkExistedEmail,
 	getPasswordByUsername,
 	getUserByUsername
-} = require("../services/crud-database/user");
-const { cryptPassword, comparePassword } = require("../helpers");
-const { isAuthed, generateAccessToken } = require("../services/authentication");
+} from "../services/crud-database/user";
+import { cryptPassword, comparePassword } from "../helpers";
+import { isAuthed, generateAccessToken } from "../services/authentication";
+import { validateSignUpBody, validateSignInBody } from "../validators/user";
+import { Request, Response } from "express";
 
 const TI_AUTH_COOKIE = process.env.TI_AUTH_COOKIE;
 
-function AuthController() {
-	this.signup = async (req, res, next) => {
+const AuthController = {
+	signup: async (req: Request, res: Response, next: Next) => {
 		const { username, email, phoneNumber, password } = req.body;
-		const { status, error } = await validateSignUpBody(req, res, next);
+		const { status, error } = await validateSignUpBody(req);
 
 		if (status === "failed")
 			return res.status(400).json({ message: error, error: error });
@@ -52,11 +47,11 @@ function AuthController() {
 						error: error
 				  })
 		);
-	};
+	},
 
-	this.signin = async (req, res, next) => {
+	signin: async (req: Request, res: Response, next: Next) => {
 		const { username, password } = req.body;
-		const { status, error } = await validateSignInBody(req, res, next);
+		const { status, error } = await validateSignInBody(req);
 
 		if (status === "failed")
 			return res.status(400).json({
@@ -131,9 +126,9 @@ function AuthController() {
 				}
 			);
 		}
-	};
+	},
 
-	this.signout = (req, res, next) => {
+	signout: (req: Request, res: Response, next: Next) => {
 		try {
 			req.user = null;
 			req.session = null;
@@ -144,7 +139,7 @@ function AuthController() {
 		} catch (error) {
 			return res.status(400).json({ message: "failed", error: error });
 		}
-	};
-}
+	}
+};
 
-module.exports = new AuthController();
+export { AuthController };

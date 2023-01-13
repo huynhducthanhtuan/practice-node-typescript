@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const AdminSchema = new mongoose.Schema(
+const AdminSchema = new Schema(
 	{
 		id: {
 			type: Number,
@@ -32,4 +32,6 @@ const AdminSchema = new mongoose.Schema(
 	{ versionKey: false }
 );
 
-module.exports = mongoose.model("Admin", AdminSchema);
+const AdminModel = model("Admin", AdminSchema);
+
+export default AdminModel;

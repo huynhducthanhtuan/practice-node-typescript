@@ -1,7 +1,7 @@
 import express from "express";
 import routerFunc = express.Router;
 const router = routerFunc();
-import AuthController from "../controllers/Auth";
+import { AuthController } from "../controllers/Auth";
 
 /**
  * @swagger

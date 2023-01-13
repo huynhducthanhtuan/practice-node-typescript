@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const CoinSchema = new mongoose.Schema(
+const CoinSchema = new Schema(
 	{
 		coinId: {
 			type: Number,
@@ -94,4 +94,6 @@ const CoinSchema = new mongoose.Schema(
 	{ versionKey: false }
 );
 
-module.exports = mongoose.model("Coin", CoinSchema);
+const CoinModel = model("Coin", CoinSchema);
+
+export default CoinModel;

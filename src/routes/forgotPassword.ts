@@ -1,7 +1,7 @@
 import express from "express";
 import routerFunc = express.Router;
 const router = routerFunc();
-import ForgotPasswordController from "../controllers/ForgotPassword";
+import { ForgotPasswordController } from "../controllers/ForgotPassword";
 
 /**
  * @swagger

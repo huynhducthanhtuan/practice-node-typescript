@@ -1,4 +1,5 @@
-const {
+import { Request } from "express";
+import {
 	validateUsername,
 	validateEmail,
 	validateEmailOptional,
@@ -14,9 +15,9 @@ const {
 	validateWebsiteOptional,
 	validateAvatarOptional,
 	returnValidationResult
-} = require("./index.js");
+} from "./index";
 
-const validateSignUpBody = async (req, res, next) => {
+const validateSignUpBody = async (req: Request) => {
 	await validateUsername(req);
 	await validateEmail(req);
 	await validatePhoneNumber(req);
@@ -25,31 +26,31 @@ const validateSignUpBody = async (req, res, next) => {
 	return returnValidationResult(req);
 };
 
-const validateSignInBody = async (req, res, next) => {
+const validateSignInBody = async (req: Request) => {
 	await validateUsername(req);
 	await validatePassword(req);
 	return returnValidationResult(req);
 };
 
-const validateSubmitEmailBody = async (req, res, next) => {
+const validateSubmitEmailBody = async (req: Request) => {
 	await validateEmail(req);
 	return returnValidationResult(req);
 };
 
-const validateSubmitCodeBody = async (req, res, next) => {
+const validateSubmitCodeBody = async (req: Request) => {
 	await validateEmail(req);
 	await validateCode(req);
 	return returnValidationResult(req);
 };
 
-const validateCreateNewPasswordBody = async (req, res, next) => {
+const validateCreateNewPasswordBody = async (req: Request) => {
 	await validateEmail(req);
 	await validatePassword(req);
 	await validateConfirmPassword(req);
 	return returnValidationResult(req);
 };
 
-const validateChangePasswordBody = async (req, res, next) => {
+const validateChangePasswordBody = async (req: Request) => {
 	await validateEmail(req);
 	await validateOldPassword(req);
 	await validateNewPassword(req);
@@ -57,7 +58,7 @@ const validateChangePasswordBody = async (req, res, next) => {
 	return returnValidationResult(req);
 };
 
-const validateUpdateProfileBody = async (req, res, next) => {
+const validateUpdateProfileBody = async (req: Request) => {
 	// await validateFullNameOptional(req);
 	await validateEmailOptional(req);
 	await validatePhoneNumberOptional(req);
@@ -66,7 +67,7 @@ const validateUpdateProfileBody = async (req, res, next) => {
 	return returnValidationResult(req);
 };
 
-module.exports = {
+export {
 	validateSignUpBody,
 	validateSignInBody,
 	validateSubmitEmailBody,

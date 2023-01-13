@@ -1,19 +1,17 @@
-require("dotenv").config();
-const nodemailer = require("nodemailer");
-const { OAuth2Client } = require("google-auth-library");
-
-const {
+import {
 	getUserByEmail,
 	updateUserConfirmationCode,
 	updateUserIsCodeConfirmed,
 	updateUserPassword
-} = require("../services/crud-database/user");
-const {
+} from "../services/crud-database/user";
+import {
 	validateSubmitEmailBody,
 	validateSubmitCodeBody,
 	validateCreateNewPasswordBody
-} = require("../validators/user");
-const { randomConfirmationCode, cryptPassword } = require("../helpers");
+} from "../validators/user";
+import nodemailer from "nodemailer";
+import { OAuth2Client } from "google-auth-library";
+import { randomConfirmationCode, cryptPassword } from "../helpers";
 
 const {
 	GOOGLE_MAILER_CLIENT_ID,
@@ -32,9 +30,9 @@ myOAuth2Client.setCredentials({
 	refresh_token: GOOGLE_MAILER_REFRESH_TOKEN
 });
 
-function ForgotPasswordController() {
-	this.submitEmail = async (req, res, next) => {
-		const { status, error } = await validateSubmitEmailBody(req, res, next);
+const ForgotPasswordController = {
+	submitEmail: async (req: Request, res: Response, next: Next) => {
+		const { status, error } = await validateSubmitEmailBody(req);
 
 		if (status === "failed")
 			return res.status(400).json({ message: error, error: error });
@@ -110,15 +108,11 @@ function ForgotPasswordController() {
 				});
 			}
 		}
-	};
+	},
 
-	this.submitCode = async (req, res, next) => {
+	submitCode: async (req: Request, res: Response, next: Next) => {
 		try {
-			const { status, error } = await validateSubmitCodeBody(
-				req,
-				res,
-				next
-			);
+			const { status, error } = await validateSubmitCodeBody(req);
 
 			if (status === "failed")
 				return res.status(400).json({ message: error, error: error });
@@ -148,14 +142,10 @@ function ForgotPasswordController() {
 		} catch (error) {
 			return res.status(400).json({ message: "failed", error: error });
 		}
-	};
+	},
 
-	this.createNewPassword = async (req, res, next) => {
-		const { status, error } = await validateCreateNewPasswordBody(
-			req,
-			res,
-			next
-		);
+	createNewPassword: async (req: Request, res: Response, next: Next) => {
+		const { status, error } = await validateCreateNewPasswordBody(req);
 
 		if (status === "failed")
 			return res.status(400).json({ message: error, error: error });
@@ -194,7 +184,7 @@ function ForgotPasswordController() {
 					.json({ message: "user-notfound", error: "user-notfound" });
 			}
 		}
-	};
-}
+	}
+};
 
-module.exports = new ForgotPasswordController();
+export { ForgotPasswordController };

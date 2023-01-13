@@ -1,5 +1,6 @@
-const _ = require("lodash");
-const {
+import _ from "lodash";
+import { Request, Response } from "express";
+import {
 	checkExistedUsername,
 	getPasswordByUsername,
 	getAdminByUsername,
@@ -7,14 +8,14 @@ const {
 	deleteUsersByUserId,
 	getListOfUsers,
 	getUserProfile
-} = require("../services/crud-database/admin");
-const { comparePassword } = require("../helpers");
-const { validateSignInBody } = require("../validators/admin");
+} from "../services/crud-database/admin";
+import { comparePassword } from "../helpers";
+import { validateSignInBody } from "../validators/admin";
 
-function AdminController() {
-	this.signin = async (req, res, next) => {
+const AdminController = {
+	signin: async (req: Request, res: Response, next: Next) => {
 		const { username, password } = req.body;
-		const { status, error } = await validateSignInBody(req, res, next);
+		const { status, error } = await validateSignInBody(req);
 
 		if (status === "failed")
 			return res.status(400).json({
@@ -57,9 +58,9 @@ function AdminController() {
 				}
 			);
 		}
-	};
+	},
 
-	this.signout = async (req, res, next) => {
+	signout: async (req: Request, res: Response, next: Next) => {
 		try {
 			req.user = null;
 			req.session = null;
@@ -70,9 +71,9 @@ function AdminController() {
 		} catch (error) {
 			return res.status(400).json({ message: "failed", error: error });
 		}
-	};
+	},
 
-	this.getAdminsList = async (req, res, next) => {
+	getAdminsList: async (req: Request, res: Response, next: Next) => {
 		await getListOfAdmins()
 			.then((datas) => {
 				datas.length === 0
@@ -97,9 +98,9 @@ function AdminController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.deleteUsers = async (req, res, next) => {
+	deleteUsers: async (req: Request, res: Response, next: Next) => {
 		try {
 			const { ids } = req.body;
 
@@ -125,9 +126,9 @@ function AdminController() {
 		} catch (error) {
 			return res.status(400).json({ message: "failed", error: error });
 		}
-	};
+	},
 
-	this.getUsersList = async (req, res, next) => {
+	getUsersList: async (req: Request, res: Response, next: Next) => {
 		await getListOfUsers()
 			.then((datas) => {
 				datas.length === 0
@@ -152,9 +153,9 @@ function AdminController() {
 					datas: []
 				})
 			);
-	};
+	},
 
-	this.getUserDetail = async (req, res, next) => {
+	getUserDetail: async (req: Request, res: Response, next: Next) => {
 		let userId;
 
 		if (!req.query.userId) userId = null;
@@ -185,7 +186,7 @@ function AdminController() {
 					data: {}
 				})
 			);
-	};
-}
+	}
+};
 
-module.exports = new AdminController();
+export { AdminController };

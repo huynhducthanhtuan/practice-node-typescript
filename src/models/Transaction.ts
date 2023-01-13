@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const TransactionSchema = new mongoose.Schema(
+const TransactionSchema = new Schema(
 	{
 		id: {
 			type: Number
@@ -107,4 +107,6 @@ const TransactionSchema = new mongoose.Schema(
 	{ timestamps: true, versionKey: false }
 );
 
-module.exports = mongoose.model("Transaction", TransactionSchema);
+const TransactionModel = model("Transaction", TransactionSchema);
+
+export default TransactionModel;

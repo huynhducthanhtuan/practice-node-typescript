@@ -9,7 +9,7 @@ const connectDatabase = () => {
 			useNewUrlParser: true
 		} as ConnectOptions);
 
-		mongoose.connection.on("error", (error) => {
+		mongoose.connection.on("error", (error: string) => {
 			console.log("Connect to database failed with error:", error);
 			throw new Error(error);
 		});
