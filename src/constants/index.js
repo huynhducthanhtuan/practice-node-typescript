@@ -1,7 +1,7 @@
 const QUERY_LIMIT_ITEM = 20;
 const TRENDING_REDUCING_LIMIT_ITEM = 10;
 
-module.exports = {
+export default {
 	QUERY_LIMIT_ITEM,
 	TRENDING_REDUCING_LIMIT_ITEM
 };

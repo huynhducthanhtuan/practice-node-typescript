@@ -1,6 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const ForgotPasswordController = require("../controllers/ForgotPassword");
+import express from "express";
+import routerFunc = express.Router;
+const router = routerFunc();
+import ForgotPasswordController from "../controllers/ForgotPassword";
 
 /**
  * @swagger
@@ -120,4 +121,4 @@ router.post("/resend-code", ForgotPasswordController.submitEmail);
  */
 router.post("/create-new-password", ForgotPasswordController.createNewPassword);
 
-module.exports = router;
+export default router;

@@ -1,16 +1,18 @@
-const dotenv = require("dotenv");
-dotenv.config();
+import { Request, Response } from "express";
+import { UserModel } from "../../models";
+type Next = () => void | Promise<void>;
 
-const jwt = require("jsonwebtoken");
-const promisify = require("util").promisify;
+import jwt from "jsonwebtoken";
+import { promisify } from "util";
 const sign = promisify(jwt.sign).bind(jwt);
 const verify = promisify(jwt.verify).bind(jwt);
 
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
-const REFRESH_ACCESS_TOKEN_SECRET = process.env.REFRESH_ACCESS_TOKEN_SECRET;
-const ENCODE_ALGORITHM = process.env.ENCODE_ALGORITHM;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "";
+const REFRESH_ACCESS_TOKEN_SECRET =
+	process.env.REFRESH_ACCESS_TOKEN_SECRET || "";
+const ENCODE_ALGORITHM = process.env.ENCODE_ALGORITHM || "";
 
-const generateAccessToken = async (payloadData) => {
+const generateAccessToken = async (payloadData: Object) => {
 	try {
 		const accessToken = await sign(payloadData, ACCESS_TOKEN_SECRET, {
 			algorithm: ENCODE_ALGORITHM,
@@ -23,7 +25,7 @@ const generateAccessToken = async (payloadData) => {
 	}
 };
 
-const generateRefreshAccessToken = async (payloadData) => {
+const generateRefreshAccessToken = async (payloadData: Object) => {
 	try {
 		const refreshAccessToken = await sign(
 			payloadData,
@@ -40,7 +42,7 @@ const generateRefreshAccessToken = async (payloadData) => {
 	}
 };
 
-const refreshAccessToken = async (refreshToken, userId) => {
+const refreshAccessToken = async (refreshToken: string, userId: number) => {
 	try {
 		const refreshAccessToken = await decodeToken(
 			refreshToken,
@@ -69,7 +71,7 @@ const refreshAccessToken = async (refreshToken, userId) => {
 	}
 };
 
-const decodeToken = async (token, secretKey) => {
+const decodeToken = async (token: string, secretKey: string) => {
 	try {
 		return await verify(token, secretKey, {
 			ignoreExpiration: true
@@ -79,7 +81,7 @@ const decodeToken = async (token, secretKey) => {
 	}
 };
 
-const isAuthed = async (req, res, next) => {
+const isAuthed = async (req: Request, res: Response, next: Next) => {
 	const accessTokenHeader = req.headers.authorization;
 	if (!accessTokenHeader) return false;
 
@@ -98,7 +100,7 @@ const isAuthed = async (req, res, next) => {
 	return true;
 };
 
-module.exports = {
+export {
 	generateAccessToken,
 	generateRefreshAccessToken,
 	refreshAccessToken,

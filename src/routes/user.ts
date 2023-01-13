@@ -1,7 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const UserController = require("../controllers/User");
-const { isAuth } = require("../middlewares/authentication");
+import express from "express";
+import routerFunc = express.Router;
+const router = routerFunc();
+import UserController from "../controllers/User";
+// import { isAuth } from "../middlewares/authentication";
 
 /**
  * @swagger
@@ -223,8 +224,6 @@ router.post("/unfollow-shark-wallet", UserController.unfollowSharkWallet);
 router.get("/list-followed-shark", UserController.getSharkFollowed);
 // router.get("/list-followed-shark", isAuth, UserController.getSharkFollowed);
 
-module.exports = router;
-
 /**
  * @swagger
  * /user/add-new-shark:
@@ -284,3 +283,5 @@ router.post("/add-new-shark", UserController.addNewShark);
  *         description: Delete shark failed
  */
 router.delete("/delete-shark-not-found", UserController.deleteSharkNotFound);
+
+export default router;

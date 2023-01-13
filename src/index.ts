@@ -1,19 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
-const dotenv = require("dotenv");
-const swaggerUI = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
-const cookieParse = require("cookie-parser");
-const routing = require("./routes");
-const { connectDatabase } = require("./configs/connectDatabase");
-const PORT = process.env.PORT || 4000;
+import express, { Express } from "express";
+import cors from "cors";
+import morgan from "morgan";
+import dotenv from "dotenv";
+import swaggerUI from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
+import cookieParse from "cookie-parser";
+import routing from "./routes";
+import connectDatabase from "./configs/connectDatabase";
 
-const app = express();
 dotenv.config();
+const app: Express = express();
+const PORT: Number = Number(process.env.PORT) || 4000;
 
 // Config Swagger
-const swaggerOptions = {
+const swaggerOptions: Object = {
 	definition: {
 		openapi: "3.0.3",
 		info: {
@@ -35,7 +35,7 @@ const swaggerOptions = {
 		"src/routes/admin.js"
 	]
 };
-const swaggerSpecs = swaggerJsDoc(swaggerOptions);
+const swaggerSpecs: Object = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
 // Middlewares

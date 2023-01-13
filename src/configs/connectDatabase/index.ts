@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
+import mongoose, { ConnectOptions } from "mongoose";
 
 mongoose.set("strictQuery", false);
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI: string = process.env.MONGODB_URI || "";
 
 const connectDatabase = () => {
 	try {
-		mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+		mongoose.connect(MONGODB_URI, {
+			useNewUrlParser: true
+		} as ConnectOptions);
 
 		mongoose.connection.on("error", (error) => {
 			console.log("Connect to database failed with error:", error);
@@ -16,10 +17,10 @@ const connectDatabase = () => {
 		mongoose.connection.on("open", () => {
 			console.log("Connect to database successfully");
 		});
-	} catch (error) {
+	} catch (error: any) {
 		console.log("Connect to database failed with error:", error);
 		throw new Error(error);
 	}
 };
 
-module.exports = { connectDatabase };
+export default connectDatabase;

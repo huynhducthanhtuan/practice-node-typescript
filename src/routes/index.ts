@@ -1,10 +1,11 @@
-const authRouter = require("./auth");
-const forgotPasswordRouter = require("./forgotPassword");
-const userRouter = require("./user");
-const displayRouter = require("./display");
-const adminRouter = require("./admin");
+import { Express, Response } from "express";
+import authRouter from "./auth";
+import forgotPasswordRouter from "./forgotPassword";
+import userRouter from "./user";
+import displayRouter from "./display";
+import adminRouter from "./admin";
 
-function routing(app) {
+function routing(app: Express) {
 	/**
 	 * @swagger
 	 * tags:
@@ -28,7 +29,7 @@ function routing(app) {
 	app.use("/admin", adminRouter);
 
 	/* Notfound routes */
-	app.use("*", (req, res) => {
+	app.use("*", (res: Response) => {
 		res.status(404).json({
 			message: "not-found",
 			error: "not-found"
@@ -36,4 +37,4 @@ function routing(app) {
 	});
 }
 
-module.exports = routing;
+export default routing;

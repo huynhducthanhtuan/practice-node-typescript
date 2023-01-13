@@ -1,6 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const AuthController = require("../controllers/Auth");
+import express from "express";
+import routerFunc = express.Router;
+const router = routerFunc();
+import AuthController from "../controllers/Auth";
 
 /**
  * @swagger
@@ -90,4 +91,4 @@ router.post("/signin", AuthController.signin);
  */
 router.post("/signout", AuthController.signout);
 
-module.exports = router;
+export default router;

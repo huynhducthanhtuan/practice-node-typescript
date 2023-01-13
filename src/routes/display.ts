@@ -1,6 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const DisplayController = require("../controllers/Display");
+import express from "express";
+import routerFunc = express.Router;
+const router = routerFunc();
+import DisplayController from "../controllers/Display";
 
 /**
  * @swagger
@@ -280,13 +281,11 @@ router.get("/coins/gain-loss", DisplayController.getGainLossOfCoins);
  */
 router.get("/tags", DisplayController.getTags);
 
-module.exports = router;
-
 /**
  * @swagger
  * /display/sharks/length:
  *   get:
- *     description: Get length of sharks list 
+ *     description: Get length of sharks list
  *     tags: [Shark]
  *     responses:
  *       200:
@@ -300,7 +299,7 @@ router.get("/sharks/length", DisplayController.getLengthOfSharksList);
  * @swagger
  * /display/sharks/transaction-history/length:
  *   get:
- *     description: Get length of transactions list 
+ *     description: Get length of transactions list
  *     tags: [Shark]
  *     responses:
  *       200:
@@ -308,13 +307,16 @@ router.get("/sharks/length", DisplayController.getLengthOfSharksList);
  *       400:
  *         description: Get length of transactions list failed
  */
-router.get("/sharks/transaction-history/length", DisplayController.getLengthOfTransactionsList);
+router.get(
+	"/sharks/transaction-history/length",
+	DisplayController.getLengthOfTransactionsList
+);
 
 /**
  * @swagger
  * /display/users/length:
  *   get:
- *     description: Get length of users list 
+ *     description: Get length of users list
  *     tags: [User]
  *     responses:
  *       200:
@@ -323,3 +325,5 @@ router.get("/sharks/transaction-history/length", DisplayController.getLengthOfTr
  *         description: Get length of users list failed
  */
 router.get("/users/length", DisplayController.getLengthOfUsersList);
+
+export default router;

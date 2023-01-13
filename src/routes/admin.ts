@@ -1,7 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const AdminController = require("../controllers/Admin");
-const { isAdmin } = require("../middlewares/authentication");
+import express from "express";
+import routerFunc = express.Router;
+const router = routerFunc();
+
+import AdminController from "../controllers/Admin";
+import { isAdmin } from "../middlewares/authentication";
 
 /**
  * @swagger
@@ -124,4 +126,4 @@ router.get("/user/list", AdminController.getUsersList);
 router.get("/user/details", AdminController.getUserDetail);
 // router.get("/user/details", isAdmin, AdminController.getUserDetail);
 
-module.exports = router;
+export default router;
