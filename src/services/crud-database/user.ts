@@ -219,9 +219,9 @@ const getListOfSharks = async (userId: number) => {
 		)
 		.lean();
 
-	sharksList = sharks.map((shark) => {
-		const isFollowed = shark.followers.includes(userId);
-		let objShark = { ...shark._doc, isFollowed: isFollowed };
+	const sharksList = sharks.map((shark) => {
+		const isFollowed: boolean = shark.followers.includes(userId);
+		let objShark = { ...shark?._doc, isFollowed: isFollowed };
 		return objShark;
 	});
 
@@ -253,13 +253,13 @@ const followWalletOfShark = async (userId: number, sharkId: number) => {
 			projection
 		);
 
-		const sharkFollowers = shark.followers;
+		const sharkFollowers = shark?.followers;
 
 		if (sharkFollowers && sharkFollowers.some((id) => id === userId))
 			return { message: "already-followed" };
 
-		shark.followers.push(userId);
-		shark.save();
+		shark?.followers.push(userId);
+		shark?.save();
 
 		return {
 			message: "success",
@@ -410,7 +410,10 @@ const getTradeTransactionHistoryOfShark = async (
 
 		// Need reset to toLowerCase()
 		const historyData = historyDatas
-			.find((data) => data.coinSymbol === coinSymbol.toUpperCase())
+			.find(
+				(data: { coinSymbol: string }) =>
+					data?.coinSymbol === coinSymbol.toUpperCase()
+			)
 			.lean();
 
 		const coinInfo = await CoinModel.findOne({
@@ -426,7 +429,8 @@ const getTradeTransactionHistoryOfShark = async (
 			if (
 				cryptos &&
 				cryptos.find(
-					(crypto) => crypto.symbol === coinSymbol.toUpperCase()
+					(crypto: { symbol: string }) =>
+						crypto.symbol === coinSymbol.toUpperCase()
 				)
 			) {
 				return {
@@ -522,7 +526,7 @@ const addNewShark = async (walletAddress: string, userId: number) => {
 		const addedData = await InvestorModel.create({
 			walletAddress: walletAddress,
 			isShark: true
-		}).lean();
+		});
 
 		const user = await UserModel.findOneAndUpdate(
 			{ userId: userId },
@@ -530,7 +534,7 @@ const addNewShark = async (walletAddress: string, userId: number) => {
 			{ new: true }
 		).lean();
 
-		let addedSharks = user.addedSharks;
+		let addedSharks = user?.addedSharks;
 
 		return {
 			message: "successfully",

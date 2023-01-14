@@ -17,7 +17,7 @@ const getListOfUsers = async () => {
 		.lean();
 };
 
-const getUserProfile = async (userId: number) => {
+const getUserProfile = async (userId: number | null | undefined) => {
 	if (!userId) return {};
 	else {
 		const user = await UserModel.findOne({ userId: userId })

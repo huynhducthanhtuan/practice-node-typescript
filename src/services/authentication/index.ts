@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { UserModel } from "../../models";
-type Next = () => void | Promise<void>;
 
 import jwt from "jsonwebtoken";
 import { promisify } from "util";
@@ -81,7 +80,7 @@ const decodeToken = async (token: string, secretKey: string) => {
 	}
 };
 
-const isAuthed = async (req: Request, res: Response, next: Next) => {
+const isAuthed = async (req: Request) => {
 	const accessTokenHeader = req.headers.authorization;
 	if (!accessTokenHeader) return false;
 

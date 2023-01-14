@@ -1,6 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
 import mongooseSequence from "mongoose-sequence";
-const AutoIncrement = mongooseSequence(mongoose);
 
 const UserSchema = new Schema(
 	{
@@ -78,7 +77,9 @@ const UserSchema = new Schema(
 	{ timestamps: true, versionKey: false }
 );
 
-UserSchema.plugin(AutoIncrement, { inc_field: "userId" });
+const AutoIncrement = mongooseSequence(UserSchema);
+
+// UserSchema.plugin(AutoIncrement, { inc_field: "userId" });
 
 const UserModel = model("User", UserSchema);
 

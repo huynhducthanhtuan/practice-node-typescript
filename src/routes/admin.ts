@@ -60,8 +60,7 @@ router.post("/signout", AdminController.signout);
  *       400:
  *         description: Get list of admins failed
  */
-router.get("/list", AdminController.getAdminsList);
-// router.get("/list", isAdmin, AdminController.getAdminsList);
+router.get("/list", isAdmin, AdminController.getAdminsList);
 
 /**
  * @swagger
@@ -87,8 +86,7 @@ router.get("/list", AdminController.getAdminsList);
  *       400:
  *         description: Delete users failed
  */
-router.post("/delete-users", AdminController.deleteUsers);
-// router.post("/delete-users", isAdmin, AdminController.deleteUser);
+router.post("/delete-users", isAdmin, AdminController.deleteUsers);
 
 /**
  * @swagger
@@ -102,8 +100,7 @@ router.post("/delete-users", AdminController.deleteUsers);
  *       400:
  *         description: Get list of users failed
  */
-router.get("/user/list", AdminController.getUsersList);
-// router.get("/user/list", isAdmin, AdminController.getUsersList);
+router.get("/user/list", isAdmin, AdminController.getUsersList);
 
 /**
  * @swagger
@@ -122,7 +119,6 @@ router.get("/user/list", AdminController.getUsersList);
  *       400:
  *         description: Get detail user failed
  */
-router.get("/user/details", AdminController.getUserDetail);
-// router.get("/user/details", isAdmin, AdminController.getUserDetail);
+router.get("/user/details", isAdmin, AdminController.getUserDetail);
 
 export default router;

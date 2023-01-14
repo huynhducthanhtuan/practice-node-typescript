@@ -8,12 +8,12 @@ import {
 import { cryptPassword, comparePassword } from "../helpers";
 import { isAuthed, generateAccessToken } from "../services/authentication";
 import { validateSignUpBody, validateSignInBody } from "../validators/user";
-import { Request, Response } from "express";
+import { RequestFunction } from "../types";
 
-const TI_AUTH_COOKIE = process.env.TI_AUTH_COOKIE;
+const TI_AUTH_COOKIE = process.env.TI_AUTH_COOKIE || "";
 
 const AuthController = {
-	signup: async (req: Request, res: Response, next: Next) => {
+	signup: async ({ req, res, next }: RequestFunction) => {
 		const { username, email, phoneNumber, password } = req.body;
 		const { status, error } = await validateSignUpBody(req);
 
@@ -49,7 +49,7 @@ const AuthController = {
 		);
 	},
 
-	signin: async (req: Request, res: Response, next: Next) => {
+	signin: async ({ req, res, next }: RequestFunction) => {
 		const { username, password } = req.body;
 		const { status, error } = await validateSignInBody(req);
 
@@ -67,7 +67,7 @@ const AuthController = {
 				user: null
 			});
 		} else {
-			const hashPassword = await getPasswordByUsername(username);
+			const hashPassword = (await getPasswordByUsername(username)) || "";
 			comparePassword(
 				password,
 				hashPassword,
@@ -91,9 +91,9 @@ const AuthController = {
 								error: null,
 								user: {
 									role: "user",
-									username: user.username,
-									userId: user.userId,
-									email: user.email
+									username: user?.username,
+									// userId: user?.userId,
+									email: user?.email
 								}
 							});
 						} else {
@@ -103,9 +103,9 @@ const AuthController = {
 									error: null,
 									user: {
 										role: "user",
-										username: user.username,
-										userId: user.userId,
-										email: user.email
+										username: user?.username,
+										// userId: user?.userId,
+										email: user?.email
 									}
 								});
 							} else {
@@ -128,10 +128,11 @@ const AuthController = {
 		}
 	},
 
-	signout: (req: Request, res: Response, next: Next) => {
+	signout: ({ req, res, next }: RequestFunction) => {
+		// req: IUserSignOutRequest
 		try {
-			req.user = null;
-			req.session = null;
+			// req.user = null;
+			// req.session = null;
 
 			return res
 				.status(200)

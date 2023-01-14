@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { Request, Response } from "express";
 import {
 	checkExistedUsername,
 	getPasswordByUsername,
@@ -11,9 +10,10 @@ import {
 } from "../services/crud-database/admin";
 import { comparePassword } from "../helpers";
 import { validateSignInBody } from "../validators/admin";
+import { RequestFunction } from "../types";
 
 const AdminController = {
-	signin: async (req: Request, res: Response, next: Next) => {
+	signin: async ({ req, res, next }: RequestFunction) => {
 		const { username, password } = req.body;
 		const { status, error } = await validateSignInBody(req);
 
@@ -31,7 +31,7 @@ const AdminController = {
 				user: null
 			});
 		} else {
-			const hashPassword = await getPasswordByUsername(username);
+			const hashPassword = (await getPasswordByUsername(username)) || "";
 			comparePassword(
 				password,
 				hashPassword,
@@ -44,8 +44,8 @@ const AdminController = {
 							error: null,
 							user: {
 								role: "admin",
-								username: admin.username,
-								email: admin.email
+								username: admin?.username,
+								email: admin?.email
 							}
 						});
 					} else {
@@ -60,10 +60,10 @@ const AdminController = {
 		}
 	},
 
-	signout: async (req: Request, res: Response, next: Next) => {
+	signout: async ({ req, res, next }: RequestFunction) => {
 		try {
-			req.user = null;
-			req.session = null;
+			// req.user = null;
+			// req.session = null;
 
 			return res
 				.status(200)
@@ -73,7 +73,7 @@ const AdminController = {
 		}
 	},
 
-	getAdminsList: async (req: Request, res: Response, next: Next) => {
+	getAdminsList: async ({ req, res, next }: RequestFunction) => {
 		await getListOfAdmins()
 			.then((datas) => {
 				datas.length === 0
@@ -100,15 +100,15 @@ const AdminController = {
 			);
 	},
 
-	deleteUsers: async (req: Request, res: Response, next: Next) => {
+	deleteUsers: async ({ req, res, next }: RequestFunction) => {
 		try {
 			const { ids } = req.body;
 
 			const checkedIds = ids;
-			checkedIds.forEach((id) => {
+			checkedIds.forEach((id: number) => {
 				id = Number(id);
 				if (_.isNaN(id)) {
-					Error.captureStackTrace(err);
+					Error.captureStackTrace({});
 				}
 			});
 
@@ -128,7 +128,7 @@ const AdminController = {
 		}
 	},
 
-	getUsersList: async (req: Request, res: Response, next: Next) => {
+	getUsersList: async ({ req, res, next }: RequestFunction) => {
 		await getListOfUsers()
 			.then((datas) => {
 				datas.length === 0
@@ -155,8 +155,8 @@ const AdminController = {
 			);
 	},
 
-	getUserDetail: async (req: Request, res: Response, next: Next) => {
-		let userId;
+	getUserDetail: async ({ req, res, next }: RequestFunction) => {
+		let userId: number | null | undefined;
 
 		if (!req.query.userId) userId = null;
 		else {

@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import mongooseSequence from "mongoose-sequence";
-const AutoIncrement = mongooseSequence(mongoose);
 
 const InvestorSchema = new Schema(
 	{
@@ -53,7 +52,8 @@ const InvestorSchema = new Schema(
 	{ versionKey: false }
 );
 
-InvestorSchema.plugin(AutoIncrement, { inc_field: "sharkId" });
+const AutoIncrement = mongooseSequence(InvestorSchema);
+// InvestorSchema.plugin(AutoIncrement, { inc_field: "sharkId" });
 
 const InvestorModel = model("Investor", InvestorSchema);
 

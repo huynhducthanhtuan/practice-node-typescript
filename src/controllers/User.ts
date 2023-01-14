@@ -1,4 +1,4 @@
-import _, { lte } from "lodash";
+import _ from "lodash";
 import {
 	getUserByEmail,
 	updateUserPassword,
@@ -19,9 +19,10 @@ import {
 	validateChangePasswordBody
 } from "../validators/user";
 import { cryptPassword, comparePassword } from "../helpers";
+import { RequestFunction } from "../types";
 
 const UserController = {
-	getUserProfile: async (req: Request, res: Response, next: Next) => {
+	getUserProfile: async ({ req, res, next }: RequestFunction) => {
 		let userId = req.query.userId;
 
 		if (!userId) userId = null;
@@ -54,7 +55,7 @@ const UserController = {
 			);
 	},
 
-	updateUserProfile: async (req: Request, res: Response, next: Next) => {
+	updateUserProfile: async ({ req, res, next }: RequestFunction) => {
 		let userId = req.query.userId;
 
 		if (!userId) userId = null;
@@ -95,7 +96,7 @@ const UserController = {
 		}
 	},
 
-	changePassword: async (req: Request, res: Response, next: Next) => {
+	changePassword: async ({ req, res, next }: RequestFunction) => {
 		const { status, error } = await validateChangePasswordBody(
 			req,
 			res,
@@ -148,7 +149,7 @@ const UserController = {
 		}
 	},
 
-	upgradePremiumAccount: async (req: Request, res: Response, next: Next) => {
+	upgradePremiumAccount: async ({ req, res, next }: RequestFunction) => {
 		let userId = req.body.userId;
 
 		if (!userId) userId = null;
@@ -177,7 +178,7 @@ const UserController = {
 			);
 	},
 
-	followSharkWallet: async (req: Request, res: Response, next: Next) => {
+	followSharkWallet: async ({ req, res, next }: RequestFunction) => {
 		let { userId, sharkId } = req.body;
 
 		if (!userId) userId = null;
@@ -214,7 +215,7 @@ const UserController = {
 			);
 	},
 
-	unfollowSharkWallet: async (req: Request, res: Response, next: Next) => {
+	unfollowSharkWallet: async ({ req, res, next }: RequestFunction) => {
 		let { userId, sharkId } = req.body;
 
 		if (!userId) userId = null;
@@ -250,7 +251,7 @@ const UserController = {
 			);
 	},
 
-	getSharkFollowed: async (req: Request, res: Response, next: Next) => {
+	getSharkFollowed: async ({ req, res, next }: RequestFunction) => {
 		let userId = req.query.userId;
 
 		if (!userId) userId = null;
@@ -285,7 +286,7 @@ const UserController = {
 			);
 	},
 
-	addNewShark: async (req: Request, res: Response, next: Next) => {
+	addNewShark: async ({ req, res, next }: RequestFunction) => {
 		let { walletAddress, userId } = req.body;
 
 		if (!userId) userId = null;
@@ -316,7 +317,7 @@ const UserController = {
 			);
 	},
 
-	deleteSharkNotFound: async (req: Request, res: Response, next: Next) => {
+	deleteSharkNotFound: async ({ req, res, next }: RequestFunction) => {
 		let { walletAddress, userId } = req.body;
 
 		if (!userId) userId = null;

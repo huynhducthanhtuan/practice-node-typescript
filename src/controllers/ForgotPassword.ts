@@ -12,6 +12,7 @@ import {
 import nodemailer from "nodemailer";
 import { OAuth2Client } from "google-auth-library";
 import { randomConfirmationCode, cryptPassword } from "../helpers";
+import { RequestFunction } from "../types";
 
 const {
 	GOOGLE_MAILER_CLIENT_ID,
@@ -31,7 +32,7 @@ myOAuth2Client.setCredentials({
 });
 
 const ForgotPasswordController = {
-	submitEmail: async (req: Request, res: Response, next: Next) => {
+	submitEmail: async ({ req, res, next }: RequestFunction) => {
 		const { status, error } = await validateSubmitEmailBody(req);
 
 		if (status === "failed")
@@ -110,7 +111,7 @@ const ForgotPasswordController = {
 		}
 	},
 
-	submitCode: async (req: Request, res: Response, next: Next) => {
+	submitCode: async ({ req, res, next }: RequestFunction) => {
 		try {
 			const { status, error } = await validateSubmitCodeBody(req);
 
@@ -144,7 +145,7 @@ const ForgotPasswordController = {
 		}
 	},
 
-	createNewPassword: async (req: Request, res: Response, next: Next) => {
+	createNewPassword: async ({ req, res, next }: RequestFunction) => {
 		const { status, error } = await validateCreateNewPasswordBody(req);
 
 		if (status === "failed")
@@ -157,21 +158,24 @@ const ForgotPasswordController = {
 				// Check if code is confirmed?
 				if (user.isCodeConfirmed) {
 					// Encode password & update in DB
-					cryptPassword(password, async (error, hashPassword) => {
-						await updateUserPassword(user.userId, hashPassword)
-							.then(() =>
-								res.status(200).json({
-									message: "successfully",
-									error: null
-								})
-							)
-							.catch((error) =>
-								res.status(400).json({
-									message: "failed",
-									error: error
-								})
-							);
-					});
+					cryptPassword(
+						password,
+						async (error: any, hashPassword: string) => {
+							await updateUserPassword(user?.userId, hashPassword)
+								.then(() =>
+									res.status(200).json({
+										message: "successfully",
+										error: null
+									})
+								)
+								.catch((error) =>
+									res.status(400).json({
+										message: "failed",
+										error: error
+									})
+								);
+						}
+					);
 				} else {
 					return res.status(400).json({
 						message: "not-confirm-code-yet",
