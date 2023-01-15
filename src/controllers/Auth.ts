@@ -109,7 +109,7 @@ const AuthController = {
 									}
 								});
 							} else {
-								return res.status(400).json({
+								return res.status(401).json({
 									message: "failed-unauthorized",
 									error: "failed-unauthorized",
 									user: null
