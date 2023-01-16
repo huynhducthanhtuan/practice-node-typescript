@@ -10,3 +10,10 @@ export interface IUserSignOutRequest extends Request {
 	user: string | null;
 	session: object | null;
 }
+
+export interface ICreateNewUser {
+	username: string | null;
+	email: string | null;
+	phoneNumber: string | null;
+	hashPassword: string | null | undefined;
+}

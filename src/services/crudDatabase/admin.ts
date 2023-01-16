@@ -31,24 +31,24 @@ const getUserProfile = async (userId: number | null | undefined) => {
 	}
 };
 
+// Comment
 const checkExistedUsernameForUpdateProfile = async (
 	userId: number,
 	username: string
 ) => {
-	const user = await UserModel.findOne({ username: username }).lean();
-
-	if (user && user.userId !== userId) return true;
-	else return false;
+	// const user = await UserModel.findOne({ username: username }).lean();
+	// if (user && user?.userId !== userId) return true;
+	// else return false;
 };
 
+// Comment
 const checkExistedEmailForUpdateProfile = async (
 	userId: number,
 	email: string
 ) => {
-	const user = await UserModel.findOne({ email: email }).lean();
-
-	if (user && user.userId !== userId) return true;
-	else return false;
+	// const user = await UserModel.findOne({ email: email }).lean();
+	// if (user && user?.userId !== userId) return true;
+	// else return false;
 };
 
 const updateUserProfile = async (
@@ -61,42 +61,37 @@ const updateUserProfile = async (
 		avatar: string;
 	}
 ) => {
-	try {
-		if (!userId) return "userid-required";
-		else {
-			const { fullName, email, phoneNumber, website, avatar } =
-				updateInfo;
-
-			if (!(await checkExistedUserId(userId))) return "user-notfound";
-
-			if (
-				email &&
-				(await checkExistedEmailForUpdateProfile(userId, email))
-			)
-				return "email-existed";
-
-			const newUpdateInfo = {
-				fullName: fullName === "" ? undefined : fullName,
-				email: email === "" ? undefined : email,
-				phoneNumber: phoneNumber === "" ? undefined : phoneNumber,
-				website: website === "" ? undefined : website,
-				avatar: avatar === "" ? undefined : avatar
-			};
-
-			await UserModel.findOneAndUpdate({ userId: userId }, newUpdateInfo)
-				.lean()
-				.then((data) => {
-					if (!data) throw new Error();
-				})
-				.catch((error) => {
-					throw new Error(error);
-				});
-
-			return "success";
-		}
-	} catch (error) {
-		return "error";
-	}
+	// try {
+	// 	if (!userId) return "userid-required";
+	// 	else {
+	// 		const { fullName, email, phoneNumber, website, avatar } =
+	// 			updateInfo;
+	// 		if (!(await checkExistedUserId(userId))) return "user-notfound";
+	// 		if (
+	// 			email &&
+	// 			(await checkExistedEmailForUpdateProfile(userId, email))
+	// 		)
+	// 			return "email-existed";
+	// 		const newUpdateInfo = {
+	// 			fullName: fullName === "" ? undefined : fullName,
+	// 			email: email === "" ? undefined : email,
+	// 			phoneNumber: phoneNumber === "" ? undefined : phoneNumber,
+	// 			website: website === "" ? undefined : website,
+	// 			avatar: avatar === "" ? undefined : avatar
+	// 		};
+	// 		await UserModel.findOneAndUpdate({ userId: userId }, newUpdateInfo)
+	// 			.lean()
+	// 			.then((data) => {
+	// 				if (!data) throw new Error();
+	// 			})
+	// 			.catch((error) => {
+	// 				throw new Error(error);
+	// 			});
+	// 		return "success";
+	// 	}
+	// } catch (error) {
+	// 	return "error";
+	// }
 };
 
 const upgradeUserPremiumAccount = async (userId: number) => {

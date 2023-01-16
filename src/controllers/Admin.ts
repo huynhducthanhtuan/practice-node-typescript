@@ -7,7 +7,7 @@ import {
 	deleteUsersByUserId,
 	getListOfUsers,
 	getUserProfile
-} from "../services/crud-database/admin";
+} from "../services/crudDatabase/admin";
 import { comparePassword } from "../helpers";
 import { validateSignInBody } from "../validators/admin";
 import { RequestFunction } from "../types";

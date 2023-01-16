@@ -6,19 +6,6 @@ import displayRouter from "./display";
 import adminRouter from "./admin";
 
 function routing(app: Express) {
-	/**
-	 * @swagger
-	 * tags:
-	 *   name: Authentiation
-	 *   name: Forgot Password
-	 *   name: Coin - Token
-	 *   name: Shark
-	 *   name: Gain and Loss
-	 *   name: User
-	 *   name: Admin
-	 *   name: Others
-	 */
-
 	/* User routes */
 	app.use("/auth", authRouter);
 	app.use("/forgot-password", forgotPasswordRouter);

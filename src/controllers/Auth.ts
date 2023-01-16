@@ -4,7 +4,7 @@ import {
 	checkExistedEmail,
 	getPasswordByUsername,
 	getUserByUsername
-} from "../services/crud-database/user";
+} from "../services/crudDatabase/user";
 import { cryptPassword, comparePassword } from "../helpers";
 import { isAuthed, generateAccessToken } from "../services/authentication";
 import { validateSignUpBody, validateSignInBody } from "../validators/user";
@@ -49,6 +49,7 @@ const AuthController = {
 		);
 	},
 
+	// Comment
 	signin: async ({ req, res, next }: RequestFunction) => {
 		const { username, password } = req.body;
 		const { status, error } = await validateSignInBody(req);
@@ -128,6 +129,7 @@ const AuthController = {
 		}
 	},
 
+	// Comment
 	signout: ({ req, res, next }: RequestFunction) => {
 		// req: IUserSignOutRequest
 		try {
