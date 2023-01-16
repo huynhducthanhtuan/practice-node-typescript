@@ -10,7 +10,7 @@ import {
 } from "../services/crudDatabase/admin";
 import { comparePassword } from "../helpers";
 import { validateSignInBody } from "../validators/admin";
-import { RequestFunction } from "../types";
+import { RequestFunction, RequestMiddlewares } from "../types";
 
 const AdminController = {
 	signin: async ({ req, res, next }: RequestFunction) => {

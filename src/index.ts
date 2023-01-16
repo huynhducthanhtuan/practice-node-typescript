@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+import { errorHandler } from "./types";
 import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
@@ -43,6 +44,7 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParse());
+app.use(errorHandler);
 
 connectDatabase();
 
