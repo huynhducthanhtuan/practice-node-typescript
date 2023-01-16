@@ -78,7 +78,6 @@ const UserSchema = new Schema(
 );
 
 const AutoIncrement = mongooseSequence(UserSchema);
-
 // UserSchema.plugin(AutoIncrement, { inc_field: "userId" });
 
 const UserModel = model("User", UserSchema);
