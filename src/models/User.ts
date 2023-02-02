@@ -1,14 +1,33 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import mongooseSequence from "mongoose-sequence";
 
-const UserSchema = new Schema(
+interface IUser {
+	userId: Number;
+	username: String;
+	email: String;
+	phoneNumber: String;
+	password: String;
+	fullName: String;
+	confirmationCode: String;
+	isCodeConfirmed: Boolean;
+	avatar: String;
+	website: String;
+	premiumAccount: Boolean;
+	walletAddress: String;
+	sharksFollowed: Array<{}>;
+	addedSharks: Array<{}>;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+const UserSchema: Schema = new Schema(
 	{
 		username: {
 			type: String,
 			trim: true,
 			required: true,
 			unique: true,
-			minLength: 5,
+			minlength: 5,
 			maxlength: 16
 		},
 		email: {
@@ -74,12 +93,17 @@ const UserSchema = new Schema(
 			default: []
 		}
 	},
-	{ timestamps: true, versionKey: false }
+	{
+		timestamps: true,
+		versionKey: false
+	}
 );
 
-const AutoIncrement = mongooseSequence(UserSchema);
-// UserSchema.plugin(AutoIncrement, { inc_field: "userId" });
+// ERROR
+// const AutoIncrement = mongooseSequence(UserSchema, { inc_field: "userId" });
 
-const UserModel = model("User", UserSchema);
+// UserSchema.plugin(AutoIncrement);
+
+const UserModel: Model<IUser> = mongoose.model<IUser>("User", UserSchema);
 
 export default UserModel;

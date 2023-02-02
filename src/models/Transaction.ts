@@ -1,5 +1,35 @@
 import { Schema, model } from "mongoose";
 
+interface ITransaction {
+	id: Number;
+	transactionId: Number;
+	sharkId: Number;
+	timeStamp: Number;
+	pastPrice: Number;
+	presentPrice: Number;
+	numberOfTokens: Number;
+	contractAddress: String;
+	tokenName: String;
+	tokenSymbol: String;
+	value: String;
+	from: String;
+	to: String;
+	gas: String;
+	hash: String;
+	blockHash: String;
+	cumulativeGasUsed: String;
+	blockNumber: String;
+	nonce: String;
+	gasPrice: String;
+	transactionIndex: String;
+	input: String;
+	gasUsed: String;
+	confirmations: String;
+	tokenDecimal: String;
+	presentDate: String;
+	pastDate: String;
+}
+
 const TransactionSchema = new Schema(
 	{
 		id: {
@@ -104,9 +134,9 @@ const TransactionSchema = new Schema(
 			trim: true
 		}
 	},
-	{ timestamps: true, versionKey: false }
+	{ versionKey: false }
 );
 
-const TransactionModel = model("Transaction", TransactionSchema);
+const TransactionModel = model<ITransaction>("Transaction", TransactionSchema);
 
 export default TransactionModel;

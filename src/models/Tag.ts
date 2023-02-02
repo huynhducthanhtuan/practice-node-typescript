@@ -1,5 +1,10 @@
 import { Schema, model } from "mongoose";
 
+interface ITag {
+	id: number;
+	name: string;
+}
+
 const TagSchema = new Schema(
 	{
 		id: {
@@ -17,6 +22,6 @@ const TagSchema = new Schema(
 	{ versionKey: false }
 );
 
-const TagModel = model("Tag", TagSchema);
+const TagModel = model<ITag>("Tag", TagSchema);
 
 export default TagModel;

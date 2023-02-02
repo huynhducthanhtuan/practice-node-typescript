@@ -18,18 +18,19 @@ const AuthController = {
 		const { status, error } = await validateSignUpBody(req);
 
 		if (status === "failed")
-			return res.status(400).json({ message: error, error: error });
+			return res.json({ message: error, error: error });
 
 		if (await checkExistedUsername(username))
-			return res.status(400).json({
+			return res.json({
 				message: "username-existed",
 				error: "username-existed"
 			});
 
 		if (await checkExistedEmail(email))
-			return res
-				.status(400)
-				.json({ message: "email-existed", error: "email-existed" });
+			return res.json({
+				message: "email-existed",
+				error: "email-existed"
+			});
 
 		cryptPassword(password, async (error, hashPassword) =>
 			(await createNewUser({
@@ -38,11 +39,11 @@ const AuthController = {
 				phoneNumber,
 				hashPassword
 			})) == true
-				? res.status(200).json({
+				? res.json({
 						message: "successfully",
 						error: null
 				  })
-				: res.status(400).json({
+				: res.json({
 						message: "failed",
 						error: error
 				  })
@@ -55,14 +56,14 @@ const AuthController = {
 		const { status, error } = await validateSignInBody(req);
 
 		if (status === "failed")
-			return res.status(400).json({
+			return res.json({
 				message: error,
 				error: error,
 				user: null
 			});
 
 		if (!(await checkExistedUsername(username))) {
-			return res.status(404).json({
+			return res.json({
 				message: "username-notfound",
 				error: "username-notfound",
 				user: null
@@ -87,7 +88,7 @@ const AuthController = {
 								maxAge: 604800000
 							});
 
-							return res.status(200).json({
+							return res.json({
 								message: "successfully",
 								error: null,
 								user: {
@@ -99,7 +100,7 @@ const AuthController = {
 							});
 						} else {
 							if (await isAuthed(req)) {
-								return res.status(200).json({
+								return res.json({
 									message: "successfully",
 									error: null,
 									user: {
@@ -110,7 +111,7 @@ const AuthController = {
 									}
 								});
 							} else {
-								return res.status(401).json({
+								return res.json({
 									message: "failed-unauthorized",
 									error: "failed-unauthorized",
 									user: null
@@ -118,7 +119,7 @@ const AuthController = {
 							}
 						}
 					} else {
-						return res.status(400).json({
+						return res.json({
 							message: "incorrect-password",
 							error: "incorrect-password",
 							user: null
@@ -136,11 +137,9 @@ const AuthController = {
 			// req.user = null;
 			// req.session = null;
 
-			return res
-				.status(200)
-				.json({ message: "successfully", error: null });
+			return res.json({ message: "successfully", error: null });
 		} catch (error) {
-			return res.status(400).json({ message: "failed", error: error });
+			return res.json({ message: "failed", error: error });
 		}
 	}
 };

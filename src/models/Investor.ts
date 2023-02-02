@@ -1,7 +1,21 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import mongooseSequence from "mongoose-sequence";
 
-const InvestorSchema = new Schema(
+interface IInvestor {
+	isShark: Boolean;
+	coins: Object;
+	totalAssets: String;
+	totalValueOut: String;
+	totalValueIn: String;
+	percent24h: Number;
+	transactionsHistory: Array<{}>;
+	walletAddress: String;
+	cryptos: Array<{}>;
+	historyDatas: Array<{}>;
+	followers: Array<{}>;
+}
+
+const InvestorSchema: Schema = new Schema(
 	{
 		isShark: {
 			type: Boolean,
@@ -49,12 +63,22 @@ const InvestorSchema = new Schema(
 			default: []
 		}
 	},
-	{ versionKey: false }
+	{
+		timestamps: true,
+		versionKey: false
+	}
 );
 
-const AutoIncrement = mongooseSequence(InvestorSchema);
-// InvestorSchema.plugin(AutoIncrement, { inc_field: "sharkId" });
+// ERROR
+// const AutoIncrement = mongooseSequence(InvestorSchema, {
+// 	inc_field: "sharkId"
+// });
 
-const InvestorModel = model("Investor", InvestorSchema);
+// InvestorSchema.plugin(AutoIncrement);
+
+const InvestorModel: Model<IInvestor> = mongoose.model<IInvestor>(
+	"Investor",
+	InvestorSchema
+);
 
 export default InvestorModel;

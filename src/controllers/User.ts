@@ -28,19 +28,19 @@ const UserController = {
 		await getUserProfile(Number(userId))
 			.then((data) =>
 				Object.entries(data).length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-userid-invalid",
 							error: "userid-invalid",
 							data: {}
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							data: data
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					data: {}
@@ -59,23 +59,23 @@ const UserController = {
 		// }
 		// const { status, error } = await validateUpdateProfileBody(req);
 		// if (status === "failed")
-		// 	return res.status(400).json({ message: error, error: error });
+		// 	return res.json({ message: error, error: error });
 		// else {
 		// 	const updateInfo = req.body;
 		// 	await updateUserProfile(userId, updateInfo)
 		// 		.then((data) =>
 		// 			data === "success"
-		// 				? res.status(200).json({
+		// 				? res.json({
 		// 						message: "successfully",
 		// 						error: null
 		// 				  })
-		// 				: res.status(400).json({
+		// 				: res.json({
 		// 						message: data,
 		// 						error: data
 		// 				  })
 		// 		)
 		// 		.catch((error) =>
-		// 			res.status(400).json({
+		// 			res.json({
 		// 				message: "failed",
 		// 				error: error
 		// 			})
@@ -87,7 +87,7 @@ const UserController = {
 	changePassword: async ({ req, res, next }: RequestFunction) => {
 		// const { status, error } = await validateChangePasswordBody(req);
 		// if (status === "failed")
-		// 	return res.status(400).json({ message: error, error: error });
+		// 	return res.json({ message: error, error: error });
 		// else {
 		// 	const { email, oldPassword, newPassword } = req.body;
 		// 	const user = await getUserByEmail(email);
@@ -106,17 +106,17 @@ const UserController = {
 		// 								user.userId,
 		// 								hashPassword
 		// 							)) === true
-		// 								? res.status(200).json({
+		// 								? res.json({
 		// 										message: "successfully",
 		// 										error: null
 		// 								  })
-		// 								: res.status(400).json({
+		// 								: res.json({
 		// 										message: "failed",
 		// 										error: error
 		// 								  })
 		// 					);
 		// 				} else {
-		// 					return res.status(400).json({
+		// 					return res.json({
 		// 						message: "incorrect-oldpassword",
 		// 						error: "incorrect-oldpassword"
 		// 					});
@@ -125,7 +125,7 @@ const UserController = {
 		// 		);
 		// 	} else {
 		// 		return res
-		// 			.status(400)
+		//
 		// 			.json({ message: "user-notfound", error: "user-notfound" });
 		// 	}
 		// }
@@ -143,17 +143,17 @@ const UserController = {
 		await upgradeUserPremiumAccount(userId)
 			.then((data) =>
 				data === "success"
-					? res.status(200).json({
+					? res.json({
 							message: "successfully",
 							error: null
 					  })
-					: res.status(400).json({
+					: res.json({
 							message: data,
 							error: data
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error
 				})
@@ -178,19 +178,19 @@ const UserController = {
 		await followWalletOfShark(userId, sharkId)
 			.then((data) => {
 				if (data.message === "success")
-					return res.status(200).json({
+					return res.json({
 						message: "successfully",
 						error: null,
 						data: data.data
 					});
 				else
-					return res.status(400).json({
+					return res.json({
 						message: data.message,
 						error: data.message
 					});
 			})
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error
 				})
@@ -213,19 +213,19 @@ const UserController = {
 		// await unfollowWalletOfShark(userId, sharkId)
 		// 	.then((data) => {
 		// 		if (data.message === "success")
-		// 			return res.status(200).json({
+		// 			return res.json({
 		// 				message: "successfully",
 		// 				error: null,
 		// 				data: data.data
 		// 			});
 		// 		else
-		// 			return res.status(400).json({
+		// 			return res.json({
 		// 				message: data.message,
 		// 				error: data.error
 		// 			});
 		// 	})
 		// 	.catch((error) =>
-		// 		res.status(400).json({
+		// 		res.json({
 		// 			message: "failed",
 		// 			error: error
 		// 		})
@@ -243,13 +243,13 @@ const UserController = {
 		// await getListOfSharkFollowed(userId)
 		// 	.then((data) => {
 		// 		data.message === "success"
-		// 			? res.status(200).json({
+		// 			? res.json({
 		// 					message: "successfully",
 		// 					error: null,
 		// 					datasLength: data.datas.length,
 		// 					datas: data.datas
 		// 			  })
-		// 			: res.status(400).json({
+		// 			: res.json({
 		// 					message: data.message,
 		// 					error: data.message,
 		// 					datasLength: 0,
@@ -257,7 +257,7 @@ const UserController = {
 		// 			  });
 		// 	})
 		// 	.catch((error) =>
-		// 		res.status(400).json({
+		// 		res.json({
 		// 			message: "failed",
 		// 			error: error,
 		// 			datasLength: 0,
@@ -278,19 +278,19 @@ const UserController = {
 		await addNewShark(walletAddress, userId)
 			.then((data) => {
 				data.isAdded
-					? res.status(200).json({
+					? res.json({
 							message: data.message,
 							data: data.data,
 							sharkAdded: data.sharkAdded,
 							error: null
 					  })
-					: res.status(400).json({
+					: res.json({
 							message: "add-failed",
 							error: data.message
 					  });
 			})
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: error.message,
 					error: error.error
 				})
@@ -309,17 +309,17 @@ const UserController = {
 		await deleteSharkNotFound(walletAddress, userId)
 			.then((data) => {
 				data.isDeleted
-					? res.status(200).json({
+					? res.json({
 							message: data.message,
 							error: null
 					  })
-					: res.status(400).json({
+					: res.json({
 							message: "deleted-failed",
 							error: data.message
 					  });
 			})
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: error.message,
 					error: error.error
 				})

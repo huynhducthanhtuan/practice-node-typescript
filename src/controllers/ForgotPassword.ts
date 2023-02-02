@@ -36,7 +36,7 @@ const ForgotPasswordController = {
 	submitEmail: async ({ req, res, next }: RequestFunction) => {
 		// const { status, error } = await validateSubmitEmailBody(req);
 		// if (status === "failed")
-		// 	return res.status(400).json({ message: error, error: error });
+		// 	return res.json({ message: error, error: error });
 		// else {
 		// 	const { email } = req.body;
 		// 	const user = await getUserByEmail(email);
@@ -85,18 +85,18 @@ const ForgotPasswordController = {
 		// 				confirmationCode
 		// 			);
 		// 			await updateUserIsCodeConfirmed(user?.userId, false);
-		// 			return res.status(200).json({
+		// 			return res.json({
 		// 				message: "successfully",
 		// 				error: null
 		// 			});
 		// 		} catch (error) {
-		// 			return res.status(400).json({
+		// 			return res.json({
 		// 				message: "failed",
 		// 				error: error
 		// 			});
 		// 		}
 		// 	} else {
-		// 		return res.status(400).json({
+		// 		return res.json({
 		// 			message: "email-notfound",
 		// 			error: "email-notfound"
 		// 		});
@@ -109,7 +109,7 @@ const ForgotPasswordController = {
 		// try {
 		// 	const { status, error } = await validateSubmitCodeBody(req);
 		// 	if (status === "failed")
-		// 		return res.status(400).json({ message: error, error: error });
+		// 		return res.json({ message: error, error: error });
 		// 	else {
 		// 		const { email, code } = req.body;
 		// 		const user = await getUserByEmail(email);
@@ -117,22 +117,22 @@ const ForgotPasswordController = {
 		// 			if (user.confirmationCode === code) {
 		// 				await updateUserIsCodeConfirmed(user?.userId, true);
 		// 				return res
-		// 					.status(200)
+		//
 		// 					.json({ message: "successfully", error: null });
 		// 			} else
-		// 				return res.status(400).json({
+		// 				return res.json({
 		// 					message: "wrong-code",
 		// 					error: "wrong-code"
 		// 				});
 		// 		} else {
-		// 			return res.status(400).json({
+		// 			return res.json({
 		// 				message: "user-notfound",
 		// 				error: "user-notfound"
 		// 			});
 		// 		}
 		// 	}
 		// } catch (error) {
-		// 	return res.status(400).json({ message: "failed", error: error });
+		// 	return res.json({ message: "failed", error: error });
 		// }
 	},
 
@@ -140,7 +140,7 @@ const ForgotPasswordController = {
 	createNewPassword: async ({ req, res, next }: RequestFunction) => {
 		// const { status, error } = await validateCreateNewPasswordBody(req);
 		// if (status === "failed")
-		// 	return res.status(400).json({ message: error, error: error });
+		// 	return res.json({ message: error, error: error });
 		// else {
 		// 	const { email, password } = req.body;
 		// 	const user = await getUserByEmail(email);
@@ -153,13 +153,13 @@ const ForgotPasswordController = {
 		// 				async (error: any, hashPassword: string) => {
 		// 					await updateUserPassword(user?.userId, hashPassword)
 		// 						.then(() =>
-		// 							res.status(200).json({
+		// 							res.json({
 		// 								message: "successfully",
 		// 								error: null
 		// 							})
 		// 						)
 		// 						.catch((error) =>
-		// 							res.status(400).json({
+		// 							res.json({
 		// 								message: "failed",
 		// 								error: error
 		// 							})
@@ -167,15 +167,13 @@ const ForgotPasswordController = {
 		// 				}
 		// 			);
 		// 		} else {
-		// 			return res.status(400).json({
+		// 			return res.json({
 		// 				message: "not-confirm-code-yet",
 		// 				error: "not-confirm-code-yet"
 		// 			});
 		// 		}
 		// 	} else {
-		// 		return res
-		// 			.status(400)
-		// 			.json({ message: "user-notfound", error: "user-notfound" });
+		// 		return res.json({ message: "user-notfound", error: "user-notfound" });
 		// 	}
 		// }
 	}

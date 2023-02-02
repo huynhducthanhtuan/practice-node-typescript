@@ -1,5 +1,28 @@
 import { Schema, model } from "mongoose";
 
+interface ICoin {
+	coinId: number;
+	ethId: string;
+	coingeckoId: string;
+	cmcRank: number;
+	name: string;
+	symbol: string;
+	contractAddress: string;
+	type: string;
+	iconURL: string;
+	marketCap: number;
+	maxSupply: number;
+	totalSupply: number;
+	circulatingSupply: number;
+	tagNames: string[];
+	urls: object;
+	usd: object;
+	prices: object;
+	originalPrices: { hourly: object; daily: object };
+	pricesLast1Month: object;
+	totalInvestment: number;
+}
+
 const CoinSchema = new Schema(
 	{
 		coinId: {
@@ -79,7 +102,7 @@ const CoinSchema = new Schema(
 			default: {}
 		},
 		originalPrices: {
-			type: Object,
+			type: { hourly: Object, daily: Object },
 			default: {}
 		},
 		pricesLast1Month: {
@@ -94,6 +117,6 @@ const CoinSchema = new Schema(
 	{ versionKey: false }
 );
 
-const CoinModel = model("Coin", CoinSchema);
+const CoinModel = model<ICoin>("Coin", CoinSchema);
 
 export default CoinModel;

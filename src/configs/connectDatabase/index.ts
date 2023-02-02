@@ -1,8 +1,8 @@
 import mongoose, { ConnectOptions } from "mongoose";
-mongoose.set("strictQuery", false);
-
 import dotenv from "dotenv";
+
 dotenv.config();
+mongoose.set("strictQuery", false);
 
 const MONGODB_URI: string = process.env.MONGODB_URI || "";
 

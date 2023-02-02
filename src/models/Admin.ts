@@ -1,5 +1,12 @@
 import { Schema, model } from "mongoose";
 
+interface IAdmin {
+	id: number;
+	email: string;
+	username: string;
+	password: string;
+}
+
 const AdminSchema = new Schema(
 	{
 		id: {
@@ -32,6 +39,6 @@ const AdminSchema = new Schema(
 	{ versionKey: false }
 );
 
-const AdminModel = model("Admin", AdminSchema);
+const AdminModel = model<IAdmin>("Admin", AdminSchema);
 
 export default AdminModel;

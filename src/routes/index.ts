@@ -1,4 +1,5 @@
-import { Express, Response } from "express";
+import { Express } from "express";
+import { RequestFunction } from "./../types/index";
 import authRouter from "./auth";
 import forgotPasswordRouter from "./forgotPassword";
 import userRouter from "./user";
@@ -16,8 +17,8 @@ function routing(app: Express) {
 	app.use("/admin", adminRouter);
 
 	/* Notfound routes */
-	app.use("*", (res: Response) => {
-		res.status(404).json({
+	app.use("*", ({ req, res, next }: RequestFunction) => {
+		res.json({
 			message: "not-found",
 			error: "not-found"
 		});

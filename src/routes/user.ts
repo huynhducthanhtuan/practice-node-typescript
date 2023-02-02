@@ -1,8 +1,7 @@
-import express from "express";
-import routerFunc = express.Router;
-const router = routerFunc();
 import { UserController } from "../controllers/User";
 import { isAuth } from "../middlewares/authentication";
+import { Router } from "express";
+const router = Router();
 
 router.post("/profile/update", isAuth, UserController.updateUserProfile);
 router.get("/profile", isAuth, UserController.getUserProfile);

@@ -1,7 +1,6 @@
-import express from "express";
-import routerFunc = express.Router;
-const router = routerFunc();
 import { DisplayController } from "../controllers/Display";
+import { Router } from "express";
+const router = Router();
 
 /* Coins And Tokens */
 router.get(

@@ -9,8 +9,7 @@
 		"update-deps": "npx npm-check-updates -u && npm install"
 	},
 	"keywords": [
-		"practice-node-typescript",
-		"javascript-es6"
+		"practice-node-typescript"
 	],
 	"author": "huynhducthanhtuan",
 	"license": "MIT",

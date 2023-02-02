@@ -10,6 +10,7 @@ import {
 	TRENDING_REDUCING_LIMIT_ITEM
 } from "../../constants";
 import { ICreateNewUser } from "./../../types";
+import _ from "lodash";
 
 const getUserByUsername = async (username: string) => {
 	return await UserModel.findOne({ username: username }).lean();
@@ -130,11 +131,13 @@ const checkExistedSharkId = async (sharkId: number) => {
 	return Boolean(isExisted);
 };
 
-const getPasswordByUsername = async (username: string) => {
+const getPasswordByUsername = async (
+	username: string
+): Promise<string | null> => {
 	const user = await UserModel.findOne({ username: username })
 		.select("password -_id")
 		.lean();
-	return user?.password || null;
+	return _.toString(user?.password) || null;
 };
 
 const getPasswordByEmail = async (email: string) => {

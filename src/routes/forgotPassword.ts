@@ -1,7 +1,6 @@
-import express from "express";
-import routerFunc = express.Router;
-const router = routerFunc();
 import { ForgotPasswordController } from "../controllers/ForgotPassword";
+import { Router } from "express";
+const router = Router();
 
 router.post("/submit-email", ForgotPasswordController.submitEmail);
 router.post("/submit-code", ForgotPasswordController.submitCode);

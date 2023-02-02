@@ -77,13 +77,13 @@ const AdminController = {
 		await getListOfAdmins()
 			.then((datas) => {
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -91,7 +91,7 @@ const AdminController = {
 					  });
 			})
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,

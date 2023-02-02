@@ -25,13 +25,13 @@ const DisplayController = {
 		await getListOfCoinsAndTokens()
 			.then((datas) =>
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -39,7 +39,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -52,13 +52,13 @@ const DisplayController = {
 		await getListReducingCoinsAndTokens()
 			.then((datas) =>
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -66,7 +66,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -79,13 +79,13 @@ const DisplayController = {
 		await getListTrendingCoins()
 			.then((datas) =>
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -93,7 +93,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -106,13 +106,13 @@ const DisplayController = {
 		await getListTrendingTokens()
 			.then((datas) =>
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -120,7 +120,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -142,19 +142,19 @@ const DisplayController = {
 		await getCoinOrTokenDetails(symbol)
 			.then((data) =>
 				Object.entries(data).length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-symbol-invalid",
 							error: "symbol-invalid",
 							data: {}
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							data: data
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					data: {}
@@ -168,13 +168,13 @@ const DisplayController = {
 		await getListOfSharks(userId)
 			.then((datas) =>
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -182,7 +182,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -197,13 +197,13 @@ const DisplayController = {
 		await getListCryptosOfShark(sharkId)
 			.then((datas) =>
 				datas === -1
-					? res.status(400).json({
+					? res.json({
 							message: "failed-sharkid-invalid",
 							error: "sharkid-invalid",
 							datas: [],
 							datasLength: 0
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datas: datas,
@@ -211,7 +211,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datas: [],
@@ -226,13 +226,13 @@ const DisplayController = {
 		await getListTransactionsOfShark(sharkId)
 			.then((datas) =>
 				!_.isArray(datas)
-					? res.status(400).json({
+					? res.json({
 							message: "failed-sharkid-invalid",
 							error: "sharkid-invalid",
 							datas: [],
 							datasLength: 0
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datas: datas,
@@ -240,7 +240,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datas: [],
@@ -261,19 +261,19 @@ const DisplayController = {
 		// await getTransactionsLengthForPage(valueFilter)
 		// 	.then((data) =>
 		// 		data === 0
-		// 			? res.status(400).json({
+		// 			? res.json({
 		// 					message: "failed-listtransaction-not-exist",
 		// 					error: "listtransaction-not-exist",
 		// 					data: 0
 		// 			  })
-		// 			: res.status(200).json({
+		// 			: res.json({
 		// 					message: "successfully",
 		// 					error: null,
 		// 					data: data
 		// 			  })
 		// 	)
 		// 	.catch((error) =>
-		// 		res.status(400).json({
+		// 		res.json({
 		// 			message: "failed",
 		// 			error: error,
 		// 			data: 0
@@ -301,13 +301,13 @@ const DisplayController = {
 		await getTransactionsOfAllSharks(page, valueFilter)
 			.then((datas) =>
 				!_.isArray(datas)
-					? res.status(400).json({
+					? res.json({
 							message: "failed-listtransaction-not-exist",
 							error: "listtransaction-not-exist",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -315,7 +315,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -336,13 +336,13 @@ const DisplayController = {
 		// await getTradeTransactionHistoryOfShark(sharkId, coinSymbol)
 		// 	.then((data) =>
 		// 		data.message === "success"
-		// 			? res.status(200).json({
+		// 			? res.json({
 		// 					message: "successfully",
 		// 					error: null,
 		// 					datas: data.data,
 		// 					datasLength: data.data.length
 		// 			  })
-		// 			: res.status(400).json({
+		// 			: res.json({
 		// 					message: data.message,
 		// 					error: data.message,
 		// 					datas: null,
@@ -350,7 +350,7 @@ const DisplayController = {
 		// 			  })
 		// 	)
 		// 	.catch((error) =>
-		// 		res.status(400).json({
+		// 		res.json({
 		// 			message: "failed",
 		// 			error: error,
 		// 			datas: null,
@@ -367,13 +367,13 @@ const DisplayController = {
 		await getGainLossOfSharks(isLoss)
 			.then((datas) =>
 				!_.isArray(datas)
-					? res.status(400).json({
+					? res.json({
 							message: "failed-listgainloss-invalid",
 							error: "listgainloss-invalid",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -381,7 +381,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -399,13 +399,13 @@ const DisplayController = {
 		await getGainLossOfCoins(isLoss)
 			.then((datas) =>
 				!_.isArray(datas)
-					? res.status(400).json({
+					? res.json({
 							message: "failed-listgainloss-invalid",
 							error: "listgainloss-invalid",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -413,7 +413,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -426,13 +426,13 @@ const DisplayController = {
 		await getListOfTags()
 			.then((datas) =>
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -440,7 +440,7 @@ const DisplayController = {
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -453,19 +453,19 @@ const DisplayController = {
 		await getLengthOfSharksList()
 			.then((data) =>
 				data.message !== "success"
-					? res.status(400).json({
+					? res.json({
 							message: "failed-get-length",
 							error: data?.error,
 							data: 0
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							data: data?.length
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -482,19 +482,19 @@ const DisplayController = {
 		await getLengthOfTransactionsList()
 			.then((data) =>
 				data.message !== "success"
-					? res.status(400).json({
+					? res.json({
 							message: "failed-get-length",
 							error: data?.error,
 							data: 0
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							data: data?.length
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -507,19 +507,19 @@ const DisplayController = {
 		await getLengthOfUsersList()
 			.then((data) =>
 				data.message !== "success"
-					? res.status(400).json({
+					? res.json({
 							message: "failed-get-length",
 							error: data?.error,
 							data: 0
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							data: data?.length
 					  })
 			)
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
