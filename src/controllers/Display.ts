@@ -257,7 +257,9 @@ const DisplayController = {
 	}: RequestFunction) => {
 		// let { valueFilter } = req.body;
 		// valueFilter = _.toNumber(valueFilter);
+
 		// if (_.isNaN(valueFilter) || valueFilter < 0) valueFilter = 0;
+		
 		// await getTransactionsLengthForPage(valueFilter)
 		// 	.then((data) =>
 		// 		data === 0
@@ -529,4 +531,4 @@ const DisplayController = {
 	}
 };
 
-export { DisplayController };
+export default  DisplayController;

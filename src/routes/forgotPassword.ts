@@ -1,4 +1,4 @@
-import { ForgotPasswordController } from "../controllers/ForgotPassword";
+import ForgotPasswordController from "../controllers/ForgotPassword";
 import { Router } from "express";
 const router = Router();
 

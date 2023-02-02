@@ -1,4 +1,4 @@
-import { DisplayController } from "../controllers/Display";
+import DisplayController from "../controllers/Display";
 import { Router } from "express";
 const router = Router();
 

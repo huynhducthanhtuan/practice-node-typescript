@@ -83,52 +83,54 @@ const UserController = {
 		// }
 	},
 
-	// Comment
 	changePassword: async ({ req, res, next }: RequestFunction) => {
-		// const { status, error } = await validateChangePasswordBody(req);
-		// if (status === "failed")
-		// 	return res.json({ message: error, error: error });
-		// else {
-		// 	const { email, oldPassword, newPassword } = req.body;
-		// 	const user = await getUserByEmail(email);
-		// 	if (user) {
-		// 		// Check correct old password
-		// 		const password = await getPasswordByEmail(email) || "";
-		// 		comparePassword(
-		// 			oldPassword,
-		// 			password,
-		// 			(error, isPasswordMatch) => {
-		// 				if (isPasswordMatch) {
-		// 					cryptPassword(
-		// 						newPassword,
-		// 						async (error, hashPassword) =>
-		// 							(await updateUserPassword(
-		// 								user.userId,
-		// 								hashPassword
-		// 							)) === true
-		// 								? res.json({
-		// 										message: "successfully",
-		// 										error: null
-		// 								  })
-		// 								: res.json({
-		// 										message: "failed",
-		// 										error: error
-		// 								  })
-		// 					);
-		// 				} else {
-		// 					return res.json({
-		// 						message: "incorrect-oldpassword",
-		// 						error: "incorrect-oldpassword"
-		// 					});
-		// 				}
-		// 			}
-		// 		);
-		// 	} else {
-		// 		return res
-		//
-		// 			.json({ message: "user-notfound", error: "user-notfound" });
-		// 	}
-		// }
+		const { status, error } = await validateChangePasswordBody(req);
+
+		if (status === "failed")
+			return res.json({ message: error, error: error });
+		else {
+			const { email, oldPassword, newPassword } = req.body;
+			const user = await getUserByEmail(email);
+
+			if (user) {
+				// Check correct old password
+				const password = (await getPasswordByEmail(email)) || "";
+				comparePassword(
+					oldPassword,
+					password,
+					async (_error, isPasswordMatch) => {
+						if (isPasswordMatch) {
+							cryptPassword(
+								newPassword,
+								async (error, hashPassword) =>
+									(await updateUserPassword(
+										user?.userId,
+										hashPassword
+									)) === true
+										? res.json({
+												message: "successfully",
+												error: null
+										  })
+										: res.json({
+												message: "failed",
+												error: error
+										  })
+							);
+						} else {
+							return res.json({
+								message: "incorrect-oldpassword",
+								error: "incorrect-oldpassword"
+							});
+						}
+					}
+				);
+			} else {
+				return res.json({
+					message: "user-notfound",
+					error: "user-notfound"
+				});
+			}
+		}
 	},
 
 	upgradePremiumAccount: async ({ req, res, next }: RequestFunction) => {
@@ -246,7 +248,7 @@ const UserController = {
 		// 			? res.json({
 		// 					message: "successfully",
 		// 					error: null,
-		// 					datasLength: data.datas.length,
+		// 					datasLength: data?.datas?.length,
 		// 					datas: data.datas
 		// 			  })
 		// 			: res.json({
@@ -327,4 +329,4 @@ const UserController = {
 	}
 };
 
-export { UserController };
+export default UserController;

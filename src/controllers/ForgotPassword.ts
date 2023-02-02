@@ -116,9 +116,7 @@ const ForgotPasswordController = {
 		// 		if (user) {
 		// 			if (user.confirmationCode === code) {
 		// 				await updateUserIsCodeConfirmed(user?.userId, true);
-		// 				return res
-		//
-		// 					.json({ message: "successfully", error: null });
+		// 				return res.json({ message: "successfully", error: null });
 		// 			} else
 		// 				return res.json({
 		// 					message: "wrong-code",
@@ -179,4 +177,4 @@ const ForgotPasswordController = {
 	}
 };
 
-export { ForgotPasswordController };
+export default ForgotPasswordController ;

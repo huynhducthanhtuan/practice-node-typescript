@@ -91,7 +91,7 @@ const updateUserIsCodeConfirmed = async (
 	}
 };
 
-const updateUserPassword = async (userId: number, password: string) => {
+const updateUserPassword = async (userId: number, password: string | undefined) => {
 	try {
 		await UserModel.findOneAndUpdate(
 			{ userId: userId },
@@ -212,7 +212,6 @@ const getSharksLength = async () => {
 	return await InvestorModel.count({}).lean();
 };
 
-// Comment
 const getListOfSharks = async (userId: string) => {
 	const sharks = await InvestorModel.find({ isShark: true })
 		.sort("sharkId")
@@ -222,7 +221,7 @@ const getListOfSharks = async (userId: string) => {
 		.lean();
 
 	const sharksList = sharks.map((shark) => {
-		const isFollowed: boolean = true; // shark.followers.includes(userId);
+		const isFollowed: boolean = shark.followers.includes(userId) || false;
 		let objShark = { ...shark, isFollowed: isFollowed };
 		return objShark;
 	});
@@ -272,40 +271,44 @@ const followWalletOfShark = async (userId: number, sharkId: number) => {
 	}
 };
 
-// Comment
 const unfollowWalletOfShark = async (userId: number, sharkId: number) => {
-	// try {
-	// 	if (userId === null) return { message: "userid-required" };
-	// 	if (userId === undefined) return { message: "userid-invalid" };
-	// 	if (sharkId === null) return { message: "sharkid-required" };
-	// 	if (sharkId === undefined) return { message: "sharkid-invalid" };
-	// 	if (!(await checkExistedUserId(userId)))
-	// 		return { message: "user-notfound" };
-	// 	if (!(await checkExistedSharkId(sharkId)))
-	// 		return { message: "shark-notfound" };
-	// 	const projection = {
-	// 		sharkId: 1,
-	// 		walletAddress: 1,
-	// 		totalAssets: 1,
-	// 		percent24h: 1,
-	// 		followers: 1
-	// 	};
-	// 	const shark = await InvestorModel.findOne(
-	// 		{ sharkId: sharkId },
-	// 		projection
-	// 	);
-	// 	const sharkFollowers = shark.followers;
-	// 	if (sharkFollowers && !sharkFollowers.some((id) => id === userId))
-	// 		return { message: "not-followed" };
-	// 	shark.followers.pull(userId);
-	// 	shark.save();
-	// 	return {
-	// 		message: "success",
-	// 		data: { ...shark, isFollowed: false }
-	// 	};
-	// } catch (error) {
-	// 	return { message: "error-unfollow-failed", error: error };
-	// }
+	try {
+		if (userId === null) return { message: "userid-required" };
+		if (userId === undefined) return { message: "userid-invalid" };
+		if (sharkId === null) return { message: "sharkid-required" };
+		if (sharkId === undefined) return { message: "sharkid-invalid" };
+
+		if (!(await checkExistedUserId(userId)))
+			return { message: "user-notfound" };
+		if (!(await checkExistedSharkId(sharkId)))
+			return { message: "shark-notfound" };
+
+		const projection = {
+			sharkId: 1,
+			walletAddress: 1,
+			totalAssets: 1,
+			percent24h: 1,
+			followers: 1
+		};
+		const shark = await InvestorModel.findOne(
+			{ sharkId: sharkId },
+			projection
+		);
+
+		const sharkFollowers = shark?.followers;
+		if (sharkFollowers && !sharkFollowers.some((id) => id === userId))
+			return { message: "not-followed" };
+
+		shark?.followers.slice(shark?.followers.indexOf(userId), 1);
+		shark?.save();
+
+		return {
+			message: "success",
+			data: { ...shark, isFollowed: false }
+		};
+	} catch (error) {
+		return { message: "error-unfollow-failed", error: error };
+	}
 };
 
 const getListOfSharkFollowed = async (userId: number) => {
@@ -400,10 +403,12 @@ const getTradeTransactionHistoryOfShark = async (
 	// 	if (!coinSymbol) return { message: "coinsymbol-required" };
 	// 	if (!(await checkExistedSharkId(sharkId)))
 	// 		return { message: "shark-notfound" };
+
 	// 	const sharks = await InvestorModel.findOne({ sharkId: sharkId }).select(
 	// 		"historyDatas cryptos -_id"
 	// 	);
 	// 	const { historyDatas, cryptos } = sharks;
+
 	// 	// Need reset to toLowerCase()
 	// 	const historyData = historyDatas
 	// 		.find(
@@ -411,6 +416,7 @@ const getTradeTransactionHistoryOfShark = async (
 	// 				data?.coinSymbol === coinSymbol.toUpperCase()
 	// 		)
 	// 		.lean();
+
 	// 	const coinInfo = await CoinModel.findOne({
 	// 		symbol: coinSymbol.toLowerCase()
 	// 	})
@@ -418,6 +424,7 @@ const getTradeTransactionHistoryOfShark = async (
 	// 			"coinId name symbol iconURL cmcRank maxSupply totalSupply circulatingSupply marketCap contractAddress prices -_id"
 	// 		)
 	// 		.lean();
+
 	// 	// Need reset to toLowerCase()
 	// 	if (!historyData) {
 	// 		if (

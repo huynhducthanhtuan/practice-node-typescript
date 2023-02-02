@@ -18,14 +18,14 @@ const AdminController = {
 		const { status, error } = await validateSignInBody(req);
 
 		if (status === "failed")
-			return res.status(400).json({
+			return res.json({
 				message: error,
 				error: error,
 				user: null
 			});
 
 		if (!(await checkExistedUsername(username))) {
-			return res.status(404).json({
+			return res.json({
 				message: "username-notfound",
 				error: "username-notfound",
 				user: null
@@ -39,7 +39,7 @@ const AdminController = {
 					if (isPasswordMatch) {
 						const admin = await getAdminByUsername(username);
 
-						return res.status(200).json({
+						return res.json({
 							message: "successfully",
 							error: null,
 							user: {
@@ -49,7 +49,7 @@ const AdminController = {
 							}
 						});
 					} else {
-						return res.status(400).json({
+						return res.json({
 							message: "incorrect-password",
 							error: "incorrect-password",
 							user: null
@@ -65,11 +65,9 @@ const AdminController = {
 			// req.user = null;
 			// req.session = null;
 
-			return res
-				.status(200)
-				.json({ message: "successfully", error: null });
+			return res.json({ message: "successfully", error: null });
 		} catch (error) {
-			return res.status(400).json({ message: "failed", error: error });
+			return res.json({ message: "failed", error: error });
 		}
 	},
 
@@ -115,16 +113,14 @@ const AdminController = {
 			const isDeletedSuccessful = await deleteUsersByUserId(checkedIds);
 
 			if (!isDeletedSuccessful)
-				return res.status(404).json({
+				return res.json({
 					message: "ids-notfound",
 					error: "ids-notfound"
 				});
 
-			return res
-				.status(200)
-				.json({ message: "successfully", error: null });
+			return res.json({ message: "successfully", error: null });
 		} catch (error) {
-			return res.status(400).json({ message: "failed", error: error });
+			return res.json({ message: "failed", error: error });
 		}
 	},
 
@@ -132,13 +128,13 @@ const AdminController = {
 		await getListOfUsers()
 			.then((datas) => {
 				datas.length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-empty-data",
 							error: "empty-data",
 							datasLength: 0,
 							datas: []
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							datasLength: datas.length,
@@ -146,7 +142,7 @@ const AdminController = {
 					  });
 			})
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					datasLength: 0,
@@ -168,19 +164,19 @@ const AdminController = {
 		await getUserProfile(userId)
 			.then((data) => {
 				Object.entries(data).length === 0
-					? res.status(400).json({
+					? res.json({
 							message: "failed-userid-invalid",
 							error: "userid-invalid",
 							data: {}
 					  })
-					: res.status(200).json({
+					: res.json({
 							message: "successfully",
 							error: null,
 							data: data
 					  });
 			})
 			.catch((error) =>
-				res.status(400).json({
+				res.json({
 					message: "failed",
 					error: error,
 					data: {}
@@ -189,4 +185,4 @@ const AdminController = {
 	}
 };
 
-export { AdminController };
+export default AdminController;

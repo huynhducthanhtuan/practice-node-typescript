@@ -31,24 +31,22 @@ const getUserProfile = async (userId: number | null | undefined) => {
 	}
 };
 
-// Comment
 const checkExistedUsernameForUpdateProfile = async (
 	userId: number,
 	username: string
 ) => {
-	// const user = await UserModel.findOne({ username: username }).lean();
-	// if (user && user?.userId !== userId) return true;
-	// else return false;
+	const user = await UserModel.findOne({ username: username }).lean();
+	if (user && user?.userId !== userId) return true;
+	else return false;
 };
 
-// Comment
 const checkExistedEmailForUpdateProfile = async (
 	userId: number,
 	email: string
 ) => {
-	// const user = await UserModel.findOne({ email: email }).lean();
-	// if (user && user?.userId !== userId) return true;
-	// else return false;
+	const user = await UserModel.findOne({ email: email }).lean();
+	if (user && user?.userId !== userId) return true;
+	else return false;
 };
 
 const updateUserProfile = async (

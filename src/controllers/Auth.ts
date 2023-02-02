@@ -50,7 +50,6 @@ const AuthController = {
 		);
 	},
 
-	// Comment
 	signin: async ({ req, res, next }: RequestFunction) => {
 		const { username, password } = req.body;
 		const { status, error } = await validateSignInBody(req);
@@ -94,7 +93,7 @@ const AuthController = {
 								user: {
 									role: "user",
 									username: user?.username,
-									// userId: user?.userId,
+									userId: user?.userId,
 									email: user?.email
 								}
 							});
@@ -106,7 +105,7 @@ const AuthController = {
 									user: {
 										role: "user",
 										username: user?.username,
-										// userId: user?.userId,
+										userId: user?.userId,
 										email: user?.email
 									}
 								});
@@ -132,7 +131,6 @@ const AuthController = {
 
 	// Comment
 	signout: ({ req, res, next }: RequestFunction) => {
-		// req: IUserSignOutRequest
 		try {
 			// req.user = null;
 			// req.session = null;
@@ -144,4 +142,4 @@ const AuthController = {
 	}
 };
 
-export { AuthController };
+export default AuthController ;

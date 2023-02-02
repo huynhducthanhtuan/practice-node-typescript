@@ -1,4 +1,4 @@
-import { UserController } from "../controllers/User";
+import UserController from "../controllers/User";
 import { isAuth } from "../middlewares/authentication";
 import { Router } from "express";
 const router = Router();
