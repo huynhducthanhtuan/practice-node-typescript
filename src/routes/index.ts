@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { RequestFunction } from "./../types/index";
+import { RequestFunction } from "./../types";
 import authRouter from "./auth";
 import forgotPasswordRouter from "./forgotPassword";
 import userRouter from "./user";

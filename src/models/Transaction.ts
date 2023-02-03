@@ -1,33 +1,33 @@
 import { Schema, model } from "mongoose";
 
 interface ITransaction {
-	id: Number;
-	transactionId: Number;
-	sharkId: Number;
-	timeStamp: Number;
-	pastPrice: Number;
-	presentPrice: Number;
-	numberOfTokens: Number;
-	contractAddress: String;
-	tokenName: String;
-	tokenSymbol: String;
-	value: String;
-	from: String;
-	to: String;
-	gas: String;
-	hash: String;
-	blockHash: String;
-	cumulativeGasUsed: String;
-	blockNumber: String;
-	nonce: String;
-	gasPrice: String;
-	transactionIndex: String;
-	input: String;
-	gasUsed: String;
-	confirmations: String;
-	tokenDecimal: String;
-	presentDate: String;
-	pastDate: String;
+	id: number;
+	transactionId: number;
+	sharkId: number;
+	timeStamp: number;
+	pastPrice: number;
+	presentPrice: number;
+	numberOfTokens: number;
+	contractAddress: string;
+	tokenName: string;
+	tokenSymbol: string;
+	value: string;
+	from: string;
+	to: string;
+	gas: string;
+	hash: string;
+	blockHash: string;
+	cumulativeGasUsed: string;
+	blockNumber: string;
+	nonce: string;
+	gasPrice: string;
+	transactionIndex: string;
+	input: string;
+	gasUsed: string;
+	confirmations: string;
+	tokenDecimal: string;
+	presentDate: string;
+	pastDate: string;
 }
 
 const TransactionSchema = new Schema(

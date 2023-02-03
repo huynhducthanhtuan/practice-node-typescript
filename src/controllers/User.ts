@@ -48,39 +48,41 @@ const UserController = {
 			);
 	},
 
-	// Comment
 	updateUserProfile: async ({ req, res, next }: RequestFunction) => {
-		// let userId = req.query.userId;
-		// if (!userId) userId = null;
-		// else {
-		// 	const userIdCheck = _.toString(userId);
-		// 	if (_.isNaN(userIdCheck)) userId = undefined;
-		// 	else userId = Number(userIdCheck);
-		// }
-		// const { status, error } = await validateUpdateProfileBody(req);
-		// if (status === "failed")
-		// 	return res.json({ message: error, error: error });
-		// else {
-		// 	const updateInfo = req.body;
-		// 	await updateUserProfile(userId, updateInfo)
-		// 		.then((data) =>
-		// 			data === "success"
-		// 				? res.json({
-		// 						message: "successfully",
-		// 						error: null
-		// 				  })
-		// 				: res.json({
-		// 						message: data,
-		// 						error: data
-		// 				  })
-		// 		)
-		// 		.catch((error) =>
-		// 			res.json({
-		// 				message: "failed",
-		// 				error: error
-		// 			})
-		// 		);
-		// }
+		let userId: any = req.query.userId;
+
+		if (!userId) userId = null;
+		else {
+			const userIdCheck = _.toString(userId);
+			if (_.isNaN(userIdCheck)) userId = undefined;
+			else userId = Number(userIdCheck);
+		}
+
+		const { status, error } = await validateUpdateProfileBody(req);
+
+		if (status === "failed")
+			return res.json({ message: error, error: error });
+		else {
+			const updateInfo = req.body;
+			await updateUserProfile(userId, updateInfo)
+				.then((data) =>
+					data === "success"
+						? res.json({
+								message: "successfully",
+								error: null
+						  })
+						: res.json({
+								message: data,
+								error: data
+						  })
+				)
+				.catch((error) =>
+					res.json({
+						message: "failed",
+						error: error
+					})
+				);
+		}
 	},
 
 	changePassword: async ({ req, res, next }: RequestFunction) => {
@@ -95,6 +97,7 @@ const UserController = {
 			if (user) {
 				// Check correct old password
 				const password = (await getPasswordByEmail(email)) || "";
+				
 				comparePassword(
 					oldPassword,
 					password,
@@ -102,7 +105,7 @@ const UserController = {
 						if (isPasswordMatch) {
 							cryptPassword(
 								newPassword,
-								async (error, hashPassword) =>
+								async (error, hashPassword) => {
 									(await updateUserPassword(
 										user?.userId,
 										hashPassword
@@ -114,7 +117,8 @@ const UserController = {
 										: res.json({
 												message: "failed",
 												error: error
-										  })
+										  });
+								}
 							);
 						} else {
 							return res.json({
@@ -199,73 +203,74 @@ const UserController = {
 			);
 	},
 
-	// Comment
 	unfollowSharkWallet: async ({ req, res, next }: RequestFunction) => {
-		// let { userId, sharkId } = req.body;
-		// if (!userId) userId = null;
-		// else {
-		// 	if (isNaN(userId)) userId = undefined;
-		// 	else userId = Number(userId);
-		// }
-		// if (!sharkId) sharkId = null;
-		// else {
-		// 	if (isNaN(sharkId)) sharkId = undefined;
-		// 	else sharkId = Number(sharkId);
-		// }
-		// await unfollowWalletOfShark(userId, sharkId)
-		// 	.then((data) => {
-		// 		if (data.message === "success")
-		// 			return res.json({
-		// 				message: "successfully",
-		// 				error: null,
-		// 				data: data.data
-		// 			});
-		// 		else
-		// 			return res.json({
-		// 				message: data.message,
-		// 				error: data.error
-		// 			});
-		// 	})
-		// 	.catch((error) =>
-		// 		res.json({
-		// 			message: "failed",
-		// 			error: error
-		// 		})
-		// 	);
+		let { userId, sharkId } = req.body;
+
+		if (!userId) userId = null;
+		else {
+			if (isNaN(userId)) userId = undefined;
+			else userId = Number(userId);
+		}
+
+		if (!sharkId) sharkId = null;
+		else {
+			if (isNaN(sharkId)) sharkId = undefined;
+			else sharkId = Number(sharkId);
+		}
+
+		await unfollowWalletOfShark(userId, sharkId)
+			.then((data) => {
+				if (data.message === "success")
+					return res.json({
+						message: "successfully",
+						error: null,
+						data: data.data
+					});
+				else
+					return res.json({
+						message: data.message,
+						error: data.error
+					});
+			})
+			.catch((error) =>
+				res.json({
+					message: "failed",
+					error: error
+				})
+			);
 	},
 
-	// Comment
 	getSharkFollowed: async ({ req, res, next }: RequestFunction) => {
-		// let userId = req.query.userId;
-		// if (!userId) userId = null;
-		// else {
-		// 	if (isNaN(userId)) userId = undefined;
-		// 	else userId = Number(userId);
-		// }
-		// await getListOfSharkFollowed(userId)
-		// 	.then((data) => {
-		// 		data.message === "success"
-		// 			? res.json({
-		// 					message: "successfully",
-		// 					error: null,
-		// 					datasLength: data?.datas?.length,
-		// 					datas: data.datas
-		// 			  })
-		// 			: res.json({
-		// 					message: data.message,
-		// 					error: data.message,
-		// 					datasLength: 0,
-		// 					datas: []
-		// 			  });
-		// 	})
-		// 	.catch((error) =>
-		// 		res.json({
-		// 			message: "failed",
-		// 			error: error,
-		// 			datasLength: 0,
-		// 			datas: []
-		// 		})
-		// 	);
+		let userId: any = req.query.userId;
+		if (!userId) userId = null;
+		else {
+			if (isNaN(userId)) userId = undefined;
+			else userId = Number(userId);
+		}
+		await getListOfSharkFollowed(userId)
+			.then((data) => {
+				data.message === "success"
+					? res.json({
+							message: "successfully",
+							error: null,
+							datasLength: data?.datas?.length,
+							datas: data.datas
+					  })
+					: res.json({
+							message: data.message,
+							error: data.message,
+							datasLength: 0,
+							datas: []
+					  });
+			})
+			.catch((error) =>
+				res.json({
+					message: "failed",
+					error: error,
+					datasLength: 0,
+					datas: []
+				})
+			);
 	},
 
 	addNewShark: async ({ req, res, next }: RequestFunction) => {

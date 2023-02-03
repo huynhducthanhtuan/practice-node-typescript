@@ -55,6 +55,3 @@ app.listen(PORT, () => {
 	console.log(`API Documentation: http://localhost:${PORT}/api-docs/`);
 });
 
-// Testing ...
-// import InvestorModel from "./models/Investor";
-// console.log(InvestorModel);

@@ -7,10 +7,10 @@ const randomConfirmationCode = () => {
 
 const cryptPassword = (
 	password: string,
-	callback: (error: any, hashPassword?: string) => {}
+	callback: (error: any, hashPassword: string) => Promise<void>
 ) => {
 	bcrypt.genSalt(10, (error: any, salt) => {
-		if (error) return callback(error);
+		if (error) return callback(error, "");
 
 		bcrypt.hash(password, salt, (error: any, hashPassword: string) => {
 			return callback(error, hashPassword);

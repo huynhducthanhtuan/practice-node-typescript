@@ -91,7 +91,10 @@ const updateUserIsCodeConfirmed = async (
 	}
 };
 
-const updateUserPassword = async (userId: number, password: string | undefined) => {
+const updateUserPassword = async (
+	userId: number,
+	password: string | undefined
+) => {
 	try {
 		await UserModel.findOneAndUpdate(
 			{ userId: userId },
@@ -342,7 +345,7 @@ const getListCryptosOfShark = async (sharkId: string) => {
 };
 
 const getTransactionsLengthForPage = async (valueFilter = 0) => {
-	return await TransactionModel.aggregate([
+	const aggregate = await TransactionModel.aggregate([
 		{
 			$project: {
 				total: { $multiply: ["$presentPrice", "$numberOfTokens"] }
@@ -352,6 +355,8 @@ const getTransactionsLengthForPage = async (valueFilter = 0) => {
 		{ $match: { total: { $gte: valueFilter } } },
 		{ $count: "transactionsLength" }
 	]);
+
+	return aggregate[0].transactionsLength || 0;
 };
 
 const getTransactionsOfAllSharks = async (page: number, valueFilter = 0) => {
@@ -392,70 +397,69 @@ const getListTransactionsOfShark = async (sharkId: string) => {
 	return shark?.transactionsHistory || -1;
 };
 
-// Comment
 const getTradeTransactionHistoryOfShark = async (
 	sharkId: number,
 	coinSymbol: string
 ) => {
-	// try {
-	// 	if (sharkId === null) return { message: "sharkid-required" };
-	// 	if (sharkId === undefined) return { message: "sharkid-invalid" };
-	// 	if (!coinSymbol) return { message: "coinsymbol-required" };
-	// 	if (!(await checkExistedSharkId(sharkId)))
-	// 		return { message: "shark-notfound" };
+	try {
+		if (sharkId === null) return { message: "sharkid-required" };
+		if (sharkId === undefined) return { message: "sharkid-invalid" };
+		if (!coinSymbol) return { message: "coinsymbol-required" };
+		if (!(await checkExistedSharkId(sharkId)))
+			return { message: "shark-notfound" };
 
-	// 	const sharks = await InvestorModel.findOne({ sharkId: sharkId }).select(
-	// 		"historyDatas cryptos -_id"
-	// 	);
-	// 	const { historyDatas, cryptos } = sharks;
+		const sharks = await InvestorModel.findOne({ sharkId: sharkId }).select(
+			"historyDatas cryptos -_id"
+		);
 
-	// 	// Need reset to toLowerCase()
-	// 	const historyData = historyDatas
-	// 		.find(
-	// 			(data: { coinSymbol: string }) =>
-	// 				data?.coinSymbol === coinSymbol.toUpperCase()
-	// 		)
-	// 		.lean();
+		let historyDatas: any = sharks?.historyDatas;
+		let cryptos: any = sharks?.cryptos;
 
-	// 	const coinInfo = await CoinModel.findOne({
-	// 		symbol: coinSymbol.toLowerCase()
-	// 	})
-	// 		.select(
-	// 			"coinId name symbol iconURL cmcRank maxSupply totalSupply circulatingSupply marketCap contractAddress prices -_id"
-	// 		)
-	// 		.lean();
+		const historyData = historyDatas
+			.find(
+				(data: { coinSymbol: string }) =>
+					data?.coinSymbol === coinSymbol.toLowerCase()
+			)
+			.lean();
 
-	// 	// Need reset to toLowerCase()
-	// 	if (!historyData) {
-	// 		if (
-	// 			cryptos &&
-	// 			cryptos.find(
-	// 				(crypto: { symbol: string }) =>
-	// 					crypto.symbol === coinSymbol.toUpperCase()
-	// 			)
-	// 		) {
-	// 			return {
-	// 				message: "success",
-	// 				data: {
-	// 					historyData: null,
-	// 					coinInfo: coinInfo || null
-	// 				}
-	// 			};
-	// 		} else {
-	// 			return { message: "coin-notfound" };
-	// 		}
-	// 	} else {
-	// 		return {
-	// 			message: "success",
-	// 			data: {
-	// 				historyData: historyData.historyData || null,
-	// 				coinInfo: coinInfo || null
-	// 			}
-	// 		};
-	// 	}
-	// } catch (error) {
-	// 	return { message: "error" };
-	// }
+		const coinInfo = await CoinModel.findOne({
+			symbol: coinSymbol.toLowerCase()
+		})
+			.select(
+				"coinId name symbol iconURL cmcRank maxSupply totalSupply circulatingSupply marketCap contractAddress prices -_id"
+			)
+			.lean();
+
+		if (!historyData) {
+			if (
+				cryptos &&
+				cryptos.find(
+					(crypto: { symbol: string }) =>
+						crypto.symbol === coinSymbol.toLowerCase()
+				)
+			) {
+				return {
+					message: "success",
+					data: {
+						historyData: null,
+						coinInfo: coinInfo || null
+					}
+				};
+			} else {
+				return { message: "coin-notfound", data: null };
+			}
+		} else {
+			return {
+				message: "success",
+				data: {
+					historyData: historyData.historyData || null,
+					coinInfo: coinInfo || null
+				}
+			};
+		}
+	} catch (error) {
+		return { message: "error", data: null };
+	}
 };
 
 const getHoursPriceOfToken = async (tokenSymbol: string) => {

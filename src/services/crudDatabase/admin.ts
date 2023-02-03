@@ -59,37 +59,42 @@ const updateUserProfile = async (
 		avatar: string;
 	}
 ) => {
-	// try {
-	// 	if (!userId) return "userid-required";
-	// 	else {
-	// 		const { fullName, email, phoneNumber, website, avatar } =
-	// 			updateInfo;
-	// 		if (!(await checkExistedUserId(userId))) return "user-notfound";
-	// 		if (
-	// 			email &&
-	// 			(await checkExistedEmailForUpdateProfile(userId, email))
-	// 		)
-	// 			return "email-existed";
-	// 		const newUpdateInfo = {
-	// 			fullName: fullName === "" ? undefined : fullName,
-	// 			email: email === "" ? undefined : email,
-	// 			phoneNumber: phoneNumber === "" ? undefined : phoneNumber,
-	// 			website: website === "" ? undefined : website,
-	// 			avatar: avatar === "" ? undefined : avatar
-	// 		};
-	// 		await UserModel.findOneAndUpdate({ userId: userId }, newUpdateInfo)
-	// 			.lean()
-	// 			.then((data) => {
-	// 				if (!data) throw new Error();
-	// 			})
-	// 			.catch((error) => {
-	// 				throw new Error(error);
-	// 			});
-	// 		return "success";
-	// 	}
-	// } catch (error) {
-	// 	return "error";
-	// }
+	try {
+		if (!userId) return "userid-required";
+		else {
+			const { fullName, email, phoneNumber, website, avatar } =
+				updateInfo;
+
+			if (!(await checkExistedUserId(userId))) return "user-notfound";
+
+			if (
+				email &&
+				(await checkExistedEmailForUpdateProfile(userId, email))
+			)
+				return "email-existed";
+
+			const newUpdateInfo = {
+				fullName: fullName === "" ? undefined : fullName,
+				email: email === "" ? undefined : email,
+				phoneNumber: phoneNumber === "" ? undefined : phoneNumber,
+				website: website === "" ? undefined : website,
+				avatar: avatar === "" ? undefined : avatar
+			};
+
+			await UserModel.findOneAndUpdate({ userId: userId }, newUpdateInfo)
+				.lean()
+				.then((data) => {
+					if (!data) throw new Error();
+				})
+				.catch((error) => {
+					throw new Error(error);
+				});
+
+			return "success";
+		}
+	} catch (error) {
+		return "error";
+	}
 };
 
 const upgradeUserPremiumAccount = async (userId: number) => {

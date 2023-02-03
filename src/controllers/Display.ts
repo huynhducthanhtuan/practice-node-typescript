@@ -249,38 +249,38 @@ const DisplayController = {
 			);
 	},
 
-	// Comment
 	getTransactionsLengthForPage: async ({
 		req,
 		res,
 		next
 	}: RequestFunction) => {
-		// let { valueFilter } = req.body;
-		// valueFilter = _.toNumber(valueFilter);
+		let { valueFilter } = req.body;
 
-		// if (_.isNaN(valueFilter) || valueFilter < 0) valueFilter = 0;
-		
-		// await getTransactionsLengthForPage(valueFilter)
-		// 	.then((data) =>
-		// 		data === 0
-		// 			? res.json({
-		// 					message: "failed-listtransaction-not-exist",
-		// 					error: "listtransaction-not-exist",
-		// 					data: 0
-		// 			  })
-		// 			: res.json({
-		// 					message: "successfully",
-		// 					error: null,
-		// 					data: data
-		// 			  })
-		// 	)
-		// 	.catch((error) =>
-		// 		res.json({
-		// 			message: "failed",
-		// 			error: error,
-		// 			data: 0
-		// 		})
-		// 	);
+		valueFilter = _.toNumber(valueFilter);
+
+		if (_.isNaN(valueFilter) || valueFilter < 0) valueFilter = 0;
+
+		await getTransactionsLengthForPage(valueFilter)
+			.then((data) =>
+				data === 0
+					? res.json({
+							message: "failed-listtransaction-not-exist",
+							error: "listtransaction-not-exist",
+							data: 0
+					  })
+					: res.json({
+							message: "successfully",
+							error: null,
+							data: data
+					  })
+			)
+			.catch((error) =>
+				res.json({
+					message: "failed",
+					error: error,
+					data: 0
+				})
+			);
 	},
 
 	getListTransactionsOfAllSharks: async ({
@@ -293,11 +293,13 @@ const DisplayController = {
 		valueFilter = _.toNumber(valueFilter);
 
 		if (!page) page = null;
-		else if (_.isNaN(valueFilter) || valueFilter < 0) valueFilter = 0;
 		else {
-			const numberCheck = _.toNumber(page);
-			if (_.isNaN(numberCheck)) page = undefined;
-			else page = numberCheck;
+			if (_.isNaN(valueFilter) || valueFilter < 0) valueFilter = 0;
+			else {
+				const numberCheck = _.toNumber(page);
+				if (_.isNaN(numberCheck)) page = undefined;
+				else page = numberCheck;
+			}
 		}
 
 		await getTransactionsOfAllSharks(page, valueFilter)
@@ -326,39 +328,40 @@ const DisplayController = {
 			);
 	},
 
-	// Comment
 	getTradeTransactionHistory: async ({ req, res, next }: RequestFunction) => {
-		// let sharkId: string | undefined = req.query.sharkId;
-		// let coinSymbol: string | undefined = req.query.coinSymbol;
-		// if (!sharkId) sharkId = null;
-		// else {
-		// 	if (isNaN(sharkId)) sharkId = undefined;
-		// 	else sharkId = Number(sharkId);
-		// }
-		// await getTradeTransactionHistoryOfShark(sharkId, coinSymbol)
-		// 	.then((data) =>
-		// 		data.message === "success"
-		// 			? res.json({
-		// 					message: "successfully",
-		// 					error: null,
-		// 					datas: data.data,
-		// 					datasLength: data.data.length
-		// 			  })
-		// 			: res.json({
-		// 					message: data.message,
-		// 					error: data.message,
-		// 					datas: null,
-		// 					datasLength: 0
-		// 			  })
-		// 	)
-		// 	.catch((error) =>
-		// 		res.json({
-		// 			message: "failed",
-		// 			error: error,
-		// 			datas: null,
-		// 			datasLength: 0
-		// 		})
-		// 	);
+		let sharkId: any = req.query.sharkId;
+		let coinSymbol: any = req.query.coinSymbol;
+
+		if (!sharkId) sharkId = null;
+		else {
+			if (isNaN(sharkId)) sharkId = undefined;
+			else sharkId = Number(sharkId);
+		}
+
+		await getTradeTransactionHistoryOfShark(sharkId, coinSymbol)
+			.then((data) =>
+				data.message === "success"
+					? res.json({
+							message: "successfully",
+							error: null,
+							datas: data.data,
+							datasLength: data?.data?.historyData?.length
+					  })
+					: res.json({
+							message: data.message,
+							error: data.message,
+							datas: null,
+							datasLength: 0
+					  })
+			)
+			.catch((error) =>
+				res.json({
+					message: "failed",
+					error: error,
+					datas: null,
+					datasLength: 0
+				})
+			);
 	},
 
 	getGainLossOfSharks: async ({ req, res, next }: RequestFunction) => {
@@ -531,4 +534,4 @@ const DisplayController = {
 	}
 };
 
-export default  DisplayController;
+export default DisplayController;

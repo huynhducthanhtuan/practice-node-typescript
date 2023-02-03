@@ -32,7 +32,7 @@ const AuthController = {
 				error: "email-existed"
 			});
 
-		cryptPassword(password, async (error, hashPassword) =>
+		cryptPassword(password, async (error, hashPassword) => {
 			(await createNewUser({
 				username,
 				email,
@@ -46,8 +46,8 @@ const AuthController = {
 				: res.json({
 						message: "failed",
 						error: error
-				  })
-		);
+				  });
+		});
 	},
 
 	signin: async ({ req, res, next }: RequestFunction) => {
@@ -129,8 +129,7 @@ const AuthController = {
 		}
 	},
 
-	// Comment
-	signout: ({ req, res, next }: RequestFunction) => {
+	signout: async ({ req, res, next }: RequestFunction) => {
 		try {
 			// req.user = null;
 			// req.session = null;
@@ -142,4 +141,4 @@ const AuthController = {
 	}
 };
 
-export default AuthController ;
+export default AuthController;

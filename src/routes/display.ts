@@ -2,7 +2,7 @@ import DisplayController from "../controllers/Display";
 import { Router } from "express";
 const router = Router();
 
-/* Coins And Tokens */
+/* Coin - Token */
 router.get(
 	"/coins-and-tokens/reducing",
 	DisplayController.getReducingCoinsAndTokens
@@ -37,7 +37,7 @@ router.get(
 	DisplayController.getLengthOfTransactionsList
 );
 
-/* Gain And Loss */
+/* Gain - Loss */
 router.get("/sharks/gain-loss", DisplayController.getGainLossOfSharks);
 router.get("/coins/gain-loss", DisplayController.getGainLossOfCoins);
 

@@ -2,14 +2,14 @@ import mongoose, { Schema, Model } from "mongoose";
 import mongooseSequence from "mongoose-sequence";
 
 interface IInvestor {
-	isShark: Boolean;
-	coins: Object;
-	totalAssets: String;
-	totalValueOut: String;
-	totalValueIn: String;
-	percent24h: Number;
+	isShark: boolean;
+	coins: object;
+	totalAssets: string;
+	totalValueOut: string;
+	totalValueIn: string;
+	percent24h: number;
 	transactionsHistory: Array<{}>;
-	walletAddress: String;
+	walletAddress: string;
 	cryptos: Array<{}>;
 	historyDatas: Array<{}>;
 	followers: Array<{}>;
